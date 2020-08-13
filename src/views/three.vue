@@ -57,6 +57,21 @@
             }
         },
         mounted() {
+            let thumbSwiper = new Swiper('.thumb', {
+                watchSlidesProgress: true,
+
+                effect: 'cube',
+                touchRatio: 0,
+                cubeEffect: {
+                    shadow: false,
+                },
+                on: {
+                    tap: function() {
+                        console.log(bannerSwiper);
+                        bannerSwiper.slideTo(this.$el.index(),1,false);
+                    },
+                },
+            });
             let bannerSwiper = new Swiper('#banner', {
                 mousewheel: true,
                 effect: 'coverflow',
@@ -75,6 +90,7 @@
                     },
                     transitionStart() {
                        let activeIndex = this.activeIndex
+                        console.log(1111);
                         for (let i = 0; i < thumbSwiper.length; i++) {
                             if (i === activeIndex) {
                                 thumbSwiper[i].slideTo(1);
@@ -84,20 +100,6 @@
                         }
                     },
                 }
-            });
-            let thumbSwiper = new Swiper('.thumb', {
-                watchSlidesProgress: true,
-
-                effect: 'cube',
-                touchRatio: 0,
-                cubeEffect: {
-                    shadow: false,
-                },
-                on: {
-                    tap: function() {
-                        bannerSwiper.slideTo(this.$el.index(),1,false);
-                    },
-                },
             });
             thumbSwiper[0].slideTo(1, 0)
         }
