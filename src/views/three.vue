@@ -1,5 +1,5 @@
 <template>
-    <div style="max-width:640px; margin:0 auto; height:100%; position:relative;">
+    <div style="width:100%; height:100%; position:absolute;">
         <div class="swiper-container" id="banner">
             <div class="swiper-wrapper">
                 <div class="swiper-slide aa"></div>
@@ -46,7 +46,7 @@
 </template>
 
 <script>
-    import '../assets/css/swiper.min.css';
+    // import '../assets/css/swiper.min.css';
     import Swiper from 'swiper';
     // import '../assets/js/swiper.min'
     export default {
@@ -79,8 +79,7 @@
                 watchSlidesProgress: true,
                 on: {
                     touchMove() {
-                       let progress = this.progress
-                        console.log(this.progress)
+
                         for (let i = 0; i < this.slides.length; i++) {
                            let slideProgress = this.slides[i].progress
                             if (Math.abs(slideProgress) < 1) {
@@ -106,7 +105,8 @@
     }
 </script>
 
-<style scoped lang="scss">
+<style scoped >
+    @import '../assets/css/swiper.min.css';
     html, body, #banner, #banner .swiper-slide {
         height: 100%;
     }
