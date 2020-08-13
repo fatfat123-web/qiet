@@ -1,5 +1,5 @@
 <template>
-    <div style="width:100%; height:100%; position:absolute;">
+    <div :options="swiperOption" style="width:100%; height:100%; position:absolute;">
         <div class="swiper-container" id="banner">
             <div class="swiper-wrapper">
                 <div class="swiper-slide aa"></div>
@@ -53,7 +53,11 @@
         name: "three",
         data(){
             return{
+                swiperOption: {
 
+                    observer: true,//修改swiper自己或子元素时，自动初始化swiper
+                    observeParents: true, //修改swiper的父元素时，自动初始化swiper
+                }
             }
         },
         mounted() {
@@ -73,23 +77,27 @@
                 },
             });
             let bannerSwiper = new Swiper('#banner', {
+
                 mousewheel: true,
                 effect: 'coverflow',
                 speed: 400,
                 watchSlidesProgress: true,
                 on: {
                     touchMove() {
-
+                        console.log(1111);
                         for (let i = 0; i < this.slides.length; i++) {
                            let slideProgress = this.slides[i].progress
+
                             if (Math.abs(slideProgress) < 1) {
                                 thumbSwiper[i].setTranslate(thumbSwiper[i].width * (Math.abs(slideProgress) - 1))
+                                console.log(Math.abs(slideProgress))
+                                console.log( thumbSwiper[i])
                             }
                         }
                     },
                     transitionStart() {
                        let activeIndex = this.activeIndex
-                        console.log(1111);
+                        console.log('transitionStart')
                         for (let i = 0; i < thumbSwiper.length; i++) {
                             if (i === activeIndex) {
                                 thumbSwiper[i].slideTo(1);

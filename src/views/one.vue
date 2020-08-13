@@ -107,17 +107,12 @@
 
                     require('../assets/images/logo.png'),
 
-
-
                 ],
             }
 
         },
         components: {},
         methods: {
-
-
-
             autoPlayAudio() {
                 this.$EventBus.$emit('isPlay', true)
                 try {
@@ -132,33 +127,6 @@
             },
         },
         created() {
-
-
-            let count = 0;
-            for (let item of this.list) {
-                let img = new Image()
-                img.src = item;
-                count++
-                if (count === 40) {
-                    this.animate = false
-                    setTimeout(() => {
-
-                        this.animateEnd = false
-                        setTimeout(() => {
-                            this.autoPlayAudio()
-                            this.$router.replace('three')
-                            console.log(1234)
-
-                        }, 600)
-                    }, 2300)
-
-                }
-            }
-
-
-
-        },
-        mounted() {
             let aData = new Date().getHours();
             if (aData>7&&aData<19){
                 this.bj=1;
@@ -168,9 +136,24 @@
                 console.log(this.bj)
             }
 
+            let count = 0;
+            for (let item of this.list) {
+                let img = new Image()
+                img.src = item;
+                count++
+                if (count === 40) {
+                    this.animate = false
+                    setTimeout(() => {
+                        this.animateEnd = false
+                        setTimeout(() => {
+                            this.autoPlayAudio()
+                            this.$router.replace('three')
+
+                        }, 600)
+                    }, 2300)
+                }
+            }
         },
-
-
     }
 </script>
 

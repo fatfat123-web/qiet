@@ -48,8 +48,6 @@
             },
         },
         mounted() {
-
-
             this.$EventBus.$on('isPlay', data => {
                 this.isPlay = data;
 
