@@ -2,6 +2,9 @@
 
     <div
       :class="['container','animate__animated',{'animate__fadeOut':animateEnd===false},bj===1?'daytime':'night']">
+       <!--        哎哟喂-->
+        <div  class="logo cssanimation leBeat" style="right: 8%;top:3%;">哎哟喂</div>
+        <div class="logo cssanimation leRotateInLeft " style="right: 5.5%;top:6.3%;">文化传媒</div>
         <!--女孩子-->
         <div class="balloon"></div>
         <figure class="madeline-container">
@@ -45,7 +48,7 @@
 
 <script>
 
-
+    import {TweenMax} from 'gsap'
     export default {
         name: "one",
         data() {
@@ -165,15 +168,19 @@
                             this.autoPlayAudio()
                             this.$router.replace('three')
 
-                        }, 600)
-                    }, 2300)
+                        }, 66600)
+                    }, 662300)
                 }
             }
         },
+        mounted() {
+
+        }
     }
 </script>
 
 <style scoped lang="scss">
+    @import '../assets/css/cssanimation.css';
     .container {
         width: 100%;
         height: 100vh;
@@ -824,6 +831,24 @@
         0%,100%{opacity: 0.7;transform: scale(0.2);}
         50% {opacity: 0.7;transform: scale(0.3);}
     }
-
-
+    .logo{
+        z-index: 999;
+        position: fixed;
+        height: 1rem;
+        color:cadetblue ;
+        font-size: 0.5rem;
+    }
+    .leBeat{ animation-name: leBeat; }
+    @keyframes leBeat {
+        14%, 42% { transform: scale(1.3) }
+        28%, 70% { transform: scale(1) }
+    }
+    .leRotateInLeft{ animation-name: leRotateInLeft }
+    @keyframes leRotateInLeft {
+        from {
+            transform: rotate(-180deg) translateX(150px);
+            opacity: 0;
+        }
+        to { opacity: 1 }
+    }
 </style>

@@ -1,5 +1,6 @@
 <template>
     <div  @touchstart.prevent.once="gtouchstart()" style="width:100%; height:100%; position:absolute;">
+        <div class="logo"></div>
         <div class="swiper-container" id="banner">
             <div class="swiper-wrapper">
                 <div class="swiper-slide aa">
@@ -54,9 +55,6 @@
 </template>
 
 <script>
-    // import '../assets/css/swiper.min.css';
-    // import Swiper from 'swiper';
-    // import '../assets/js/swiper.min'
     const Swiper = require('../assets/js/swiper.min')
     export default {
         name: "three",
@@ -66,12 +64,6 @@
             }
         },
         mounted() {
-            this.$EventBus.$on('isPlay', data => {
-                this.isPlay = data;
-                console.log(this.isPlay)
-
-
-            })
 
             let thumbSwiper = new Swiper('.thumb', {
                 watchSlidesProgress: true,
@@ -136,11 +128,11 @@
         },
         methods:{
             gtouchstart(){
-
+                this.$EventBus.$emit("isPlay", true);
                 let aa = document.getElementById('music')
                 aa.play();
 
-                console.log(this.isPlay)
+
 
             }
         }
@@ -240,5 +232,16 @@
         100% {
             transform: translateY(0);
         }
+    }
+
+    .logo{
+        z-index: 999;
+        background: url(../assets/images/logo.png) no-repeat;
+        background-size: 100%;
+        position: fixed;
+        right: 5%;
+        top: 3%;
+        width: 141px;
+        height: 66px;
     }
 </style>

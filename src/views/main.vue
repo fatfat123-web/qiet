@@ -11,7 +11,7 @@
                 </div>
             </div>
             <audio ref="music" id="music" src="../assets/music/cn.mp3" loop="loop" preload autoplay="autoplay"></audio>
-            <div class="logo"></div>
+
         </div>
 
         <router-view/>
@@ -44,6 +44,9 @@
 
         watch: {
             isPlay(val) {
+                this.isPlay=val
+                console.log(this.isPlay)
+
             },
         },
         mounted() {
@@ -92,15 +95,7 @@
 </script>
 
 <style scoped lang="scss">
-    .logo{
-        background: url(../assets/images/logo.png) no-repeat;
-        background-size: 100%;
-        position: fixed;
-        right: 5%;
-        top: 3%;
-        width: 112.8px;
-        height: 52.8px;
-    }
+
     .container {
         background: black;
         height: 100vh;
