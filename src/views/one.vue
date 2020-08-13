@@ -168,8 +168,8 @@
                             this.autoPlayAudio()
                             this.$router.replace('three')
 
-                        }, 66600)
-                    }, 662300)
+                        }, 600)
+                    }, 2400)
                 }
             }
         },
