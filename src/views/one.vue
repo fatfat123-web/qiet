@@ -107,6 +107,24 @@
 
                     require('../assets/images/logo.png'),
 
+
+                    require('../assets/images/1.jpg'),
+                    require('../assets/images/2.jpg'),
+                    require('../assets/images/3.jpg'),
+                    require('../assets/images/4.jpg'),
+
+
+                    require('../assets/images/mina.jpg'),
+                    require('../assets/images/minb.jpg'),
+                    require('../assets/images/minc.jpg'),
+                    require('../assets/images/mind.jpg'),
+
+                    require('../assets/images/maxa.jpg'),
+                    require('../assets/images/maxb.jpg'),
+                    require('../assets/images/maxc.jpg'),
+                    require('../assets/images/maxd.jpg'),
+
+
                 ],
             }
 
@@ -130,10 +148,8 @@
             let aData = new Date().getHours();
             if (aData>7&&aData<19){
                 this.bj=1;
-                console.log(this.bj)
             }else {
                 this.bj=2;
-                console.log(this.bj)
             }
 
             let count = 0;
@@ -141,7 +157,7 @@
                 let img = new Image()
                 img.src = item;
                 count++
-                if (count === 40) {
+                if (count === 52) {
                     this.animate = false
                     setTimeout(() => {
                         this.animateEnd = false

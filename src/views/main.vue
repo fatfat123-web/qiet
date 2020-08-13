@@ -36,7 +36,6 @@
                 img.src = item;
                 count++
                 if (count === 1) {
-                    console.log(222)
                     this.$router.replace('/one')
                 }
             }
@@ -64,12 +63,14 @@
                     if (this.$refs.music.paused) {
                         this.$refs.music.play();// 这个就是播放
                         this.isPlay= true
+                        console.log(this.isPlay)
                         // console.log(this.music)
 
                     } else {
                         if (val) {
                             this.$refs.music.pause();// 这个就是暂停
                             this.isPlay = false
+                            console.log(this.isPlay)
                             // console.log(this.music)
                         }
                     }
