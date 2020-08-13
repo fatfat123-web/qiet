@@ -3,11 +3,13 @@
         <div class="swiper-wrapper">
             <!--            1-->
             <div class="swiper-slide">
-                1
+                <img class="particulars" src="../assets/images/1.1.png" height="89" width="506"/>
+                <img  class="headline" src="../assets/images/1.2.png" height="384" width="144"/>
+                <img  class="show" src="../assets/images/1.3.png" height="148" width="327"/>
             </div>
             <!--            2-->
             <div class="swiper-slide">
-                2
+                <div class="cssanimation leDanceOutTop sequence"> 啊我是傻逼 </div>
             </div>
             <!--            3-->
             <div class="swiper-slide">
@@ -74,6 +76,11 @@
                 followFinger: false,
                 speed: 1000,
                 mousewheel: true,
+                // effect : 'flip',
+                // flip: {
+                //     slideShadows : true,
+                //     limitRotation : true,
+                // },
                 pagination: {
                     el: '.swiper-pagination',
                     clickable: true,
@@ -107,8 +114,10 @@
         },
     }
 </script>
-
+<!--    swiper-slide  进入时候的动画-->
+<!--  ani-slide 离开时候的动画-->
 <style scoped lang="scss">
+
     body {
         background: #eee;
         font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
@@ -190,12 +199,12 @@
 
     .show {
 
-        left: 0;
-        width: 100%;
+        left: 14%;
+        width: 68%;
         height: auto;
         position: absolute;
         opacity: 1;
-
+        bottom: 11%;
     }
 
     .typeface {
@@ -221,9 +230,9 @@
 
     .particulars {
         position: absolute;
-        top: 20%;
-        left: 5%;
-        width: 60%;
+        top: 18%;
+        left: 11%;
+        width: 78%;
         height: auto;
 
     }
@@ -305,18 +314,18 @@
 
     .headline {
         position: absolute;
-        top: 20%;
-        right: 5%;
-        width: 10%;
+        top: 33%;
+        right: 39%;
+        width: 22%;
         height: auto;
 
     }
 
     .map {
         position: absolute;
-        top: 48%;
-        right: 18%;
-        width: 70%;
+        top: 71%;
+        right: 20%;
+        width: 64%;
         height: auto;
 
     }
@@ -346,8 +355,9 @@
     }
 
     .swiper-slide {
-        background: url(../assets/images/1.jpg) no-repeat;
+        background: url(../assets/images/bj.jpg) no-repeat;
         background-size: 100% 100%;
+        color: white;
 
     }
 
@@ -442,14 +452,14 @@
     }
 
     .swiper-slide .show {
-        bottom: -200px;
+        bottom: -10%;
         opacity: 0;
-        transition: all 0.5s ease 1s;
+        transition: all 0.3s ease 1s;
 
     }
 
     .ani-slide .show {
-        bottom: 0;
+        bottom: 11%;
         opacity: 1;
     }
 
@@ -568,4 +578,6 @@
         }
 
     }
+
+
 </style>
