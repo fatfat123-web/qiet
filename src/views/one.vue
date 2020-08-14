@@ -5,6 +5,8 @@
        <!--        哎哟喂-->
         <div  class="logo cssanimation leBeat" style="right: 8%;top:3%;">哎哟喂</div>
         <div class="logo cssanimation leRotateInLeft " style="right: 5.5%;top:6.3%;">文化传媒</div>
+
+        <div class="logo " ref="box" style="right: 55.5%;top:12.3%;">文化传媒</div>
         <!--女孩子-->
         <div class="balloon"></div>
         <figure class="madeline-container">
@@ -37,9 +39,9 @@
             <li>加</li>
             <li>载</li>
             <li>中</li>
-            <li style=" box-shadow: 2px 2px 5px #fff;width: 15px;height: 15px;margin-top: 5%"></li>
-            <li style=" box-shadow: 2px 2px 5px #fff;width: 15px;height: 15px;margin-top: 5%"></li>
-            <li style=" box-shadow: 2px 2px 5px #fff;width: 15px;height: 15px;margin-top: 5%"></li>
+            <li></li>
+            <li></li>
+            <li></li>
         </ul>
 
 
@@ -47,8 +49,7 @@
 </template>
 
 <script>
-
-    import {TweenMax} from 'gsap'
+    import { TimelineLite } from 'gsap'
     export default {
         name: "one",
         data() {
@@ -174,7 +175,10 @@
             }
         },
         mounted() {
+            const { box } = this.$refs
+            const timeline = new TimelineLite()
 
+            timeline.to(box, 1, { x: 200, rotation: 90 })
         }
     }
 </script>
@@ -243,14 +247,17 @@
 
         li:nth-child(4) {
             animation-delay: -.8s;
+            box-shadow: 2px 2px 5px #fff;width: 15px;height: 15px;margin-top: 5%;
         }
 
         li:nth-child(5) {
             animation-delay: -.6s;
+            box-shadow: 2px 2px 5px #fff;width: 15px;height: 15px;margin-top: 5%;
         }
 
         li:nth-child(6) {
             animation-delay: -.4s;
+            box-shadow: 2px 2px 5px #fff;width: 15px;height: 15px;margin-top: 5%;
         }
 
         li {

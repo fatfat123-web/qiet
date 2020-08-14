@@ -1,54 +1,26 @@
 <template>
-    <div  @touchstart.prevent.once="gtouchstart()" style="width:100%; height:100%; position:absolute;">
+    <div @touchstart.prevent.once="gtouchstart()" style="width:100%; height:100%; position:absolute;">
         <div class="logo"></div>
         <div class="swiper-container" id="banner">
             <div class="swiper-wrapper">
-                <div class="swiper-slide aa">
-                    <div class="headline">阿姨别这样</div>
-
+                <div v-for="item in 5" :key="item" class="swiper-slide " :style="{background: max[item-1]}">
+                    <div v-show="item===1" class="headline">阿姨别这样</div>
+                     <div>{{item}}</div>
                 </div>
-                <div class="swiper-slide bb"></div>
-                <div class="swiper-slide cc"></div>
-                <div class="swiper-slide dd"></div>
-                <div class="swiper-slide cc"></div>
             </div>
         </div>
         <div class="thumb-list">
-            <div class="swiper-container thumb" id="thumb1">
+            <div class="swiper-container thumb" :key="index" v-for="(item,index) in img" >
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
+                        <img :src="item.serial" >
+                    </div>
+                    <div class="swiper-slide">
+                        <img :src="item.min" >
+                    </div>
+                </div>
+            </div>
 
-                        <img src="../assets/images/1.jpg"  >
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="../assets/images/mina.jpg"  >
-                    </div>
-                </div>
-            </div>
-            <div class="swiper-container thumb" id="thumb2">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img src="../assets/images/2.jpg"  ></div>
-                    <div class="swiper-slide"><img src="../assets/images/minb.jpg"  ></div>
-                </div>
-            </div>
-            <div class="swiper-container thumb" id="thumb3">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img src="../assets/images/3.jpg"  ></div>
-                    <div class="swiper-slide"><img src="../assets/images/minc.jpg"  ></div>
-                </div>
-            </div>
-            <div class="swiper-container thumb" id="thumb4">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img src="../assets/images/4.jpg"  ></div>
-                    <div class="swiper-slide"><img src="../assets/images/mind.jpg"  ></div>
-                </div>
-            </div>
-            <div class="swiper-container thumb" id="thumb5">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img src="../assets/images/3.jpg"  ></div>
-                    <div class="swiper-slide"><img src="../assets/images/minc.jpg"  ></div>
-                </div>
-            </div>
 
         </div>
     </div>
@@ -58,8 +30,37 @@
     const Swiper = require('../assets/js/swiper.min')
     export default {
         name: "three",
-        data(){
-            return{
+        data() {
+            return {
+                max: [
+                    `url(${require('../assets/images/maxa.jpg')}) 0% 0% /100% 100% no-repeat`,
+                    `url(${require('../assets/images/maxb.jpg')}) 0% 0% /100% 100% no-repeat`,
+                    `url(${require('../assets/images/maxc.jpg')}) 0% 0% /100% 100% no-repeat`,
+                    `url(${require('../assets/images/maxd.jpg')}) 0% 0% /100% 100% no-repeat`,
+                    `url(${require('../assets/images/bj.jpg')}) 0% 0% /100% 100% no-repeat`,
+                ],
+                img:[
+                    {
+                        serial:require('../assets/images/1.jpg'),
+                        min: require('../assets/images/mina.jpg'),
+                    },
+                    {
+                        serial:require('../assets/images/2.jpg'),
+                        min: require('../assets/images/minb.jpg'),
+                    },
+                    {
+                        serial:require('../assets/images/3.jpg'),
+                        min: require('../assets/images/minc.jpg'),
+                    },
+                    {
+                        serial:require('../assets/images/4.jpg'),
+                        min: require('../assets/images/mind.jpg'),
+                    },
+                    {
+                        serial:require('../assets/images/2.jpg'),
+                        min: require('../assets/images/minb.jpg'),
+                    },
+                ],
 
             }
         },
@@ -67,15 +68,14 @@
 
             let thumbSwiper = new Swiper('.thumb', {
                 watchSlidesProgress: true,
-
                 effect: 'cube',
                 touchRatio: 0,
                 cubeEffect: {
                     shadow: false,
                 },
                 on: {
-                    tap: function() {
-                        bannerSwiper.slideTo(this.$el.index(),1,false);
+                    tap: function () {
+                        bannerSwiper.slideTo(this.$el.index(), 1, false);
                     },
                 },
             });
@@ -90,10 +90,9 @@
                         let slide = this.slides.eq(0);
                         slide.addClass('ani-slide');
                     },
-
                     touchMove() {
                         for (let i = 0; i < this.slides.length; i++) {
-                           let slideProgress = this.slides[i].progress
+                            let slideProgress = this.slides[i].progress
                             if (Math.abs(slideProgress) < 1) {
                                 thumbSwiper[i].setTranslate(thumbSwiper[i].width * (Math.abs(slideProgress) - 1))
                             }
@@ -105,7 +104,7 @@
                             slide.removeClass('ani-slide');
                         }
 
-                       let activeIndex = this.activeIndex
+                        let activeIndex = this.activeIndex
                         for (let i = 0; i < thumbSwiper.length; i++) {
                             if (i === activeIndex) {
                                 thumbSwiper[i].slideTo(1);
@@ -126,57 +125,57 @@
         watch: {
 
         },
-        methods:{
-            gtouchstart(){
+        methods: {
+            gtouchstart() {
                 this.$EventBus.$emit("isPlay", true);
                 let aa = document.getElementById('music')
                 aa.play();
 
-
-
-            }
+            },
         }
     }
 </script>
 
-<style scoped >
+<style scoped>
     @import '../assets/css/swiper.min.css';
+
     html, body, #banner, #banner .swiper-slide {
         height: 100%;
     }
+
     body {
         background: #000;
         overflow: hidden;
     }
+
     #banner .swiper-slide {
         overflow: hidden;
+
     }
+
     #banner .swiper-slide img {
         width: 100%;
+
     }
-    .aa{ background: url(../assets/images/maxa.jpg) no-repeat;
-        background-size: 100% 100%;}
-    .bb{ background: url(../assets/images/maxb.jpg) no-repeat;
-        background-size: 100% 100%;}
-    .cc{ background: url(../assets/images/maxc.jpg) no-repeat;
-        background-size: 100% 100%;}
-    .dd{ background: url(../assets/images/maxd.jpg) no-repeat;
-        background-size: 100% 100%;}
+
     .thumb-list {
         position: absolute;
         width: 100%;
         left: 0;
         bottom: 5%;
     }
+
     .thumb {
         width: 10%;
         margin-left: 4%;
         float: left;
     }
+
     .thumb .swiper-slide img {
         width: 100%;
         display: block;
     }
+
     .headline {
         position: absolute;
         top: 20%;
@@ -186,6 +185,7 @@
         color: white;
 
     }
+
     .swiper-slide .headline {
 
         animation: turn 1s linear 1;
@@ -234,7 +234,7 @@
         }
     }
 
-    .logo{
+    .logo {
         z-index: 999;
         background: url(../assets/images/logo.png) no-repeat;
         background-size: 100%;
