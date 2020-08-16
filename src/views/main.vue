@@ -45,8 +45,6 @@
         watch: {
             isPlay(val) {
                 this.isPlay=val
-                console.log(this.isPlay)
-
             },
         },
         mounted() {

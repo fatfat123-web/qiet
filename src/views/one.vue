@@ -6,7 +6,7 @@
         <div  class="logo cssanimation leBeat" style="right: 8%;top:3%;">哎哟喂</div>
         <div class="logo cssanimation leRotateInLeft " style="right: 5.5%;top:6.3%;">文化传媒</div>
 
-        <div class="logo " ref="box" style="right: 55.5%;top:12.3%;">文化传媒</div>
+<!--        <div class="logo " ref="box" style="right: 55.5%;top:12.3%;">文化传媒</div>-->
         <!--女孩子-->
         <div class="balloon"></div>
         <figure class="madeline-container">
@@ -175,10 +175,10 @@
             }
         },
         mounted() {
-            const { box } = this.$refs
-            const timeline = new TimelineLite()
-
-            timeline.to(box, 1, { x: 200, rotation: 90 })
+            // const { box } = this.$refs
+            // const timeline = new TimelineLite()
+            //
+            // timeline.to(box, 1, { x: 200, rotation: 90 })
         }
     }
 </script>
