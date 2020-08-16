@@ -108,7 +108,7 @@
 
         },
         mounted() {
-          this.cc();
+          // this.cc();
 
         }
     }
