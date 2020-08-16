@@ -2,7 +2,7 @@
     <div class="container">
         <div class="aa">
 
-            <div :key="index" v-for="(item,index) in fon" ref="add"
+            <div :key="index" v-for="(item,index) in fon" ref="add" :id="cc(index)"
              :class="['animate__animated',index<=0?'animate__backInLeft animate__faster':((index%2) === 0 ? 'animate__bounceInDown ':'animate__bounceInUp ')]">
                 {{item}}
             </div>
@@ -24,11 +24,14 @@
             }
         },
         methods: {
-
+             cc(index){
+                 console.log(index)
+                 document.getElementById('cc')
+             },
             jump(n, s) {
                 //    允许第一动画出现s个字
                 let helloArr = n.split('');
-
+                const _this = this
                 let timer = setInterval(() => {
                     if (this.time === 0) {
                         this.new = helloArr.slice(0, s)
@@ -40,19 +43,24 @@
 
                     } else {
                         //首先这里要做3个add 第一个为s字数的动画 第二个为单数 第三个为双数
-                        // this.$refs.add[0].classList.add('className')
+
                         this.new = helloArr.splice(s, 1)
                         this.fon.push(this.new[0]);
                         console.log(this.fon.length)
+                        this.$refs.add[0].classList.add('className')
 
+                        //下面的方法好像不可行 refs必须是要静态的不能响应
+                        if ((this.fon.length-1)%2===0){
+                            console.log(this.fon.length)
+                            console.log( this.$refs.add[(this.fon.length-1)])
+                            console.log(this.$refs.add[1])
+                            this.$refs.add[1].classList.add('bbb')
+                            console.log()
+
+                        }
                     }
-                    (this.fon.length-1)%2===0? this.$refs.add[1].classList.add('bbb'): this.$refs.add[4].classList.add('className')
-                    // if ((this.fon.length-1)%2!==0){
-                    //     // this.$refs.add[2].classList.add('bbb')
-                    //     // let aa=this.fon.length
-                    //     this.$refs.add[11].classList.add('bbb')
-                    //     console.log(this.fon.length)
-                    // }
+                    // (this.fon.length-1)%2===0? this.$refs.add[1].classList.add('bbb'): this.$refs.add[4].classList.add('className')
+
                     this.time++
 
                     if (this.time === (n.length - s + 1)) {
@@ -98,7 +106,7 @@
 
         },
         mounted() {
-
+          this.cc();
 
         }
     }
@@ -129,7 +137,8 @@
         color: red !important;
     }
     .bbb{
-        color: darkgoldenrod !important;
+
+        font-size: 0.7rem;
     }
     .aa {
 
