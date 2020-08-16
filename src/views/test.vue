@@ -47,6 +47,7 @@
                         this.new = helloArr.splice(s, 1)
                         this.fon.push(this.new[0]);
                         console.log(this.fon.length)
+                        //这里只绑到的第一条没有什么屁用
                         this.$refs.add[0].classList.add('className')
 
                         //下面的方法好像不可行 refs必须是要静态的不能响应
