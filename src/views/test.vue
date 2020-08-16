@@ -2,7 +2,7 @@
     <div class="container">
         <div class="aa">
 
-            <div :key="index" v-for="(item,index) in fon" ref="add" :id="cc(index)"
+            <div :key="index" v-for="(item,index) in fon" ref="add" :id="'cc'+index"
              :class="['animate__animated',index<=0?'animate__backInLeft animate__faster':((index%2) === 0 ? 'animate__bounceInDown ':'animate__bounceInUp ')]">
                 {{item}}
             </div>
@@ -24,10 +24,11 @@
             }
         },
         methods: {
-             cc(index){
-                 console.log(index)
-                 document.getElementById('cc')
-             },
+             // cc(index){
+             //     console.log(index)
+             //     document.getElementById('cc')
+             //     console.log(document.getElementById('cc'))
+             // },
             jump(n, s) {
                 //    允许第一动画出现s个字
                 let helloArr = n.split('');
