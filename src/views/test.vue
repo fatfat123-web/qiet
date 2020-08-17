@@ -33,11 +33,11 @@
         },
         methods: {
             jump(n, s) {
-                console.log(s)
                 let helloArr = n.split('');
-                this.kg= (s > n.length)?false:true
+                this.kg= (s>n.length)?true:false
                 let timer = setInterval(() => {
-                    if (this.time === 0&&n.length>s&&this.kg===true) {
+                    if (this.time === 0&&s!==0&&n.length>s) {
+                        this.kg=true
                         this.new = helloArr.slice(0, s)
                         this.g=1
                         let c = ''
@@ -46,7 +46,7 @@
                         }
                         this.fon.push(c);
                     } else {
-                        if ( this.fon.length>0&&n.length>s){
+                        if (this.kg===true){
                             this.cd=s
                             this.new = helloArr.splice(s, 1)
                             this.fon.push(this.new[0]);
@@ -54,6 +54,7 @@
                             this.cd=0
                             this.new = helloArr.splice(0, 1)
                             this.fon.push(this.new[0])
+                            console.log(this.fon)
                         }
                     }
                     this.time++
@@ -80,22 +81,16 @@
                     this.cc=newValue.cc
                     if (newValue.one >= 0) {
                     this.jump(newValue.name, newValue.one)
-                        console.log(newValue.one)
                     }
                 },
                 immediate: true
             },
         },
-        mounted() {
-
-        }
     }
 </script>
 
 <style scoped lang="scss">
     .container {
-        width: 100%;
-        height: 100vh;
         margin: 0;
         display: flex;
         justify-content: center;
@@ -108,9 +103,7 @@
     }
     .shell {
         display: flex;
-        position: absolute;
         width: 6rem;
-
     }
 
 </style>

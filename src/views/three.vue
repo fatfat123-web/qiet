@@ -5,16 +5,16 @@
             <div class="swiper-wrapper">
                 <div v-for="item in max.length" :key="item" class="swiper-slide " :style="{background: max[item-1]}">
                     <div v-if="item===1" class="headline">阿姨别这样</div>
-                    <test v-if="item===2&&ss===true" :open="open" style="font-size: 0.5rem"></test>
+                    <test v-if="item===2&&ss===1" :open="open" class="test"></test>
                     <img v-if="item===3" class="show" src="../assets/images/4.4.png" height="354" width="457"/>
 
                     <form v-show="item===5" class="fo">
-                         您的名字啊~<br>
-                        <input type="text"   v-model="form.name">
-                        <br>您的联系方式 <br>
-                        <input type="text"   v-model="form.phone">
+                       <span>您的名字啊~</span>
+                        <input type="text" v-model="form.name">
+                        <span>您的联系方式~</span>
+                        <input type="text" v-model="form.phone">
                         <br><br>
-                        <input type="submit" style="width: 100px;height: 30px;margin:0 0 10% 14%" value="提交">
+                        <input type="submit" value="提交">
                     </form>
 
                     <div style="color: white">{{item}}</div>
@@ -77,10 +77,10 @@
                 ],
                 aa: '',
                 transmit: null,
-                ss: false,
-                form:{
-                  name:'aaa',
-                  phone:1234,
+                ss: null,
+                form: {
+                    name: 'aaa',
+                    phone: 1234,
                 },
                 open: {
                     //需要做动效显示的字
@@ -153,7 +153,7 @@
                             }
                             //每次进入时候 触发的索引
                             let activeIndex = this.activeIndex
-                            _this.ss = activeIndex === 1 ? true : false
+                            _this.ss = activeIndex;
 
                             for (let i = 0; i < thumbSwiper.length; i++) {
                                 if (i === activeIndex) {
@@ -323,15 +323,45 @@
 
     .fo {
         position: absolute;
+        justify-content: center;
         top: 25%;
-        right: 10%;
-        background: #d8b9d7;
-        width: 67%;
-        font-size: 0.45rem;
-        text-align: left;
-        padding: 5% 0 0 13%;
+        right: 15%;
+        background-color: rgba(216, 185, 215, 0.4);
+        width: 70%;
+        padding: 5% 0 0 0;
+        font-size: 0.3rem;
+        text-align: center;
+        border:1px solid;
+        border-color: #00ffff #ffffff #00ccff #ffffff;
         input{
-         height: 0.5rem;
+            height:0.5rem;
         }
+        span{
+            line-height: 0.9rem;
+            width: 100%;
+            height: 0.9rem;
+            display:inline-block;
+        }
+        input:nth-child(-n+4) {
+            background: rosybrown;
+            opacity: 0.7;
+            width: 70%;
+        }
+
+        input:nth-child(7) {
+            background:#d8b9d7;
+            width: 100px;
+            height: 30px;
+            margin: 2% 0 10% 0;
+        }
+    }
+
+    .test {
+        font-size: 0.5rem;
+        /*这个高度越高动画效果越明显*/
+        height: 90%;
+        z-index: 3;
+        width: 100%;
+        top: -20%;
     }
 </style>

@@ -5,7 +5,7 @@
         <!--        哎哟喂-->
         <div class="logo cssanimation leBeat" style="right: 8%;top:3%;">哎哟喂</div>
         <test class="fon1" :open="open"></test>
-        <!--        <div class="logo cssanimation leRotateInLeft " style="right: 5.5%;top:6.3%;">文化传媒</div>-->
+
 
         <!--女孩子-->
         <div class="balloon"></div>
@@ -343,39 +343,40 @@
         top: 50%;
         left: 50%;
         transform: translate3d(-114%, -200%, 0);
-        animation: balloon-move 1.3s infinite alternate ease-in-out
+        animation: balloon-move 1.3s infinite alternate ease-in-out;
+        &:after {
+            content: '';
+            width: 2.2vmin;
+            height: 1.6vmin;
+            display: block;
+            position: absolute;
+            background-color: #dd2602;
+            top: 99.2%;
+            left: 44%;
+            transform: rotate(5deg) skewX(-5deg);
+            border-radius: 60% 60% 20% 20%
+        }
+
+        &:before {
+            content: '';
+            width: .2vmin;
+            height: 26vmin;
+            display: block;
+            position: absolute;
+            background-color: #7f467d;
+            top: 100%;
+            left: 50.2%
+        }
     }
 
-    .balloon:after {
-        content: '';
-        width: 2.2vmin;
-        height: 1.6vmin;
-        display: block;
-        position: absolute;
-        background-color: #dd2602;
-        top: 99.2%;
-        left: 44%;
-        transform: rotate(5deg) skewX(-5deg);
-        border-radius: 60% 60% 20% 20%
-    }
 
-    .balloon:before {
-        content: '';
-        width: .2vmin;
-        height: 26vmin;
-        display: block;
-        position: absolute;
-        background-color: #7f467d;
-        top: 100%;
-        left: 50.2%
-    }
 
     .head {
         width: 79%;
         height: 26%;
         position: relative;
         top: 40%;
-        left: 11.5%
+        left: 11.5%;
     }
 
     .head:before, .head:after {
