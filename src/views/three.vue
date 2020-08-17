@@ -5,10 +5,18 @@
             <div class="swiper-wrapper">
                 <div v-for="item in max.length" :key="item" class="swiper-slide " :style="{background: max[item-1]}">
                     <div v-if="item===1" class="headline">阿姨别这样</div>
-                    <test v-if="item===2&&ss===true" :open="open"></test>
+                    <test v-if="item===2&&ss===true" :open="open" style="font-size: 0.5rem"></test>
                     <img v-if="item===3" class="show" src="../assets/images/4.4.png" height="354" width="457"/>
-<!--                    <button style="width: 100px;height:100px;position: absolute;background: #00ccff;bottom: 10%;right: 10%"-->
-<!--                            @click="test()"></button>-->
+
+                    <form v-show="item===5" class="fo">
+                         您的名字啊~<br>
+                        <input type="text"   v-model="form.name">
+                        <br>您的联系方式 <br>
+                        <input type="text"   v-model="form.phone">
+                        <br><br>
+                        <input type="submit" style="width: 100px;height: 30px;margin:0 0 10% 14%" value="提交">
+                    </form>
+
                     <div style="color: white">{{item}}</div>
                 </div>
             </div>
@@ -33,6 +41,7 @@
 <script>
     const Swiper = require('../assets/js/swiper.min')
     import test from "./test";
+
     export default {
         name: "three",
         data() {
@@ -69,20 +78,33 @@
                 aa: '',
                 transmit: null,
                 ss: false,
-                open:{
+                form:{
+                  name:'aaa',
+                  phone:1234,
+                },
+                open: {
                     //需要做动效显示的字
-                    name:'这里是显示的字体',
-                    //one的数量决定第一个动画里显示的字数
-                    one:3,
-
+                    name: '这里是显示的字体啊啊',
+                    //one的数量决定第一个动画里显示的字数，如果one大于name的长度只会开启两个动画  所有的动画参考 https://animate.style/
+                    one: 4,
+                    //在满足one小于name长度情况下，第一个字体动画的样式(总共三个样式)  animate__faster快速
+                    oneClass: 'animate__backInLeft animate__fast',
+                    //在满足one小于name长度情况下，字体为偶数的动画样式(总共三个样式)，不满足情况下为基数(总共2个样式)
+                    twoClass: 'animate__bounceInDown',
+                    //在满足one小于name长度情况下，字体为基数的动画样式(总共三个样式)，不满足情况下为偶数(总共2个样式)
+                    threeClass: 'animate__bounceInUp',
+                    //在满足one小于name长度情况下，第一个字体的颜色(总共三个样式)，不满足情况下这个颜色没用(总共2个样式)
+                    aa: 'red  !important',
+                    //在满足one小于name长度情况下，字体为偶数的动画样式(总共三个样式)，不满足情况下为基数(总共2个样式)
+                    bb: 'white',
+                    //在满足one小于name长度情况下，字体为基数的动画样式(总共三个样式)，不满足情况下为偶数(总共2个样式)
+                    cc: 'cyan !important',
                 }
-            }
+            };
         },
-        computed:{
-
-        },
+        computed: {},
         mounted() {
-        this.swiper();
+            this.swiper();
 
         },
         watch: {},
@@ -91,7 +113,7 @@
         },
 
         methods: {
-            swiper(){
+            swiper() {
                 const _this = this
                 let thumbSwiper = new Swiper('.thumb', {
                     watchSlidesProgress: true,
@@ -100,29 +122,22 @@
                     cubeEffect: {
                         shadow: false,
                     },
-
                     on: {
                         tap: function () {
                             bannerSwiper.slideTo(this.$el.index(), 1, false);
-
                         },
-
                     },
                 });
                 let bannerSwiper = new Swiper('#banner', {
-
                     mousewheel: true,
                     effect: 'coverflow',
                     speed: 1000,
                     watchSlidesProgress: true,
-
                     on: {
-
                         init(swiper) {
                             let slide = this.slides.eq(0);
                             slide.addClass('ani-slide');
                         },
-
                         touchMove() {
                             for (let i = 0; i < this.slides.length; i++) {
                                 let slideProgress = this.slides[i].progress
@@ -138,7 +153,7 @@
                             }
                             //每次进入时候 触发的索引
                             let activeIndex = this.activeIndex
-                            _this.ss = activeIndex===1?true:false
+                            _this.ss = activeIndex === 1 ? true : false
 
                             for (let i = 0; i < thumbSwiper.length; i++) {
                                 if (i === activeIndex) {
@@ -175,7 +190,7 @@
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
     @import '../assets/css/swiper.min.css';
 
     html, body, #banner, #banner .swiper-slide {
@@ -306,4 +321,17 @@
         opacity: 1;
     }
 
+    .fo {
+        position: absolute;
+        top: 25%;
+        right: 10%;
+        background: #d8b9d7;
+        width: 67%;
+        font-size: 0.45rem;
+        text-align: left;
+        padding: 5% 0 0 13%;
+        input{
+         height: 0.5rem;
+        }
+    }
 </style>

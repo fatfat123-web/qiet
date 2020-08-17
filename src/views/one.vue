@@ -1,12 +1,12 @@
 <template>
 
     <div
-      :class="['container','animate__animated',{'animate__fadeOut':animateEnd===false},bj===1?'daytime':'night']">
-       <!--        哎哟喂-->
-        <div  class="logo cssanimation leBeat" style="right: 8%;top:3%;">哎哟喂</div>
-        <div class="logo cssanimation leRotateInLeft " style="right: 5.5%;top:6.3%;">文化传媒</div>
+            :class="['container','animate__animated',{'animate__fadeOut':animateEnd===false},bj===1?'daytime':'night']">
+        <!--        哎哟喂-->
+        <div class="logo cssanimation leBeat" style="right: 8%;top:3%;">哎哟喂</div>
+        <test class="fon1" :open="open"></test>
+        <!--        <div class="logo cssanimation leRotateInLeft " style="right: 5.5%;top:6.3%;">文化传媒</div>-->
 
-<!--        <div class="logo " ref="box" style="right: 55.5%;top:12.3%;">文化传媒</div>-->
         <!--女孩子-->
         <div class="balloon"></div>
         <figure class="madeline-container">
@@ -17,7 +17,7 @@
             <div class="head">
                 <div class="head__hat"></div>
                 <div class="head__hair"></div>
-              <!--                下面1个有问题-->
+                <!--                下面1个有问题-->
                 <div class="head__face"></div>
                 <div class="head__hair--fringe"></div>
             </div>
@@ -25,12 +25,12 @@
             <div class="arm__l"></div>
         </figure>
         <div v-if="this.bj===2">
-            <div class="moon" ></div>
+            <div class="moon"></div>
             <div class="star-five"></div>
         </div>
         <div v-if="this.bj===1">
-            <div class="cloud one" ></div>
-            <div class="cloud two" ></div>
+            <div class="cloud one"></div>
+            <div class="cloud two"></div>
             <div class="cloud three"></div>
         </div>
         <!-- 圈-->
@@ -49,14 +49,16 @@
 </template>
 
 <script>
-    import { TimelineLite } from 'gsap'
+    import {TimelineLite} from 'gsap'
+    import test from "./test";
+
     export default {
         name: "one",
         data() {
             return {
                 animateEnd: true,
                 animate: true,
-                bj:null,
+                bj: null,
                 list: [
                     require('../assets/images/bj.jpg'),
                     require('../assets/images/1.1.png'),
@@ -130,10 +132,31 @@
 
 
                 ],
+                open: {
+                    //需要做动效显示的字
+                    name: '文化传媒',
+                    //one的数量决定第一个动画里显示的字数，如果one大于name的长度只会开启两个动画  所有的动画参考 https://animate.style/
+                    one: 0,
+                    //在满足one小于name长度情况下，第一个字体动画的样式(总共三个样式)  animate__faster快速
+                    oneClass: 'animate__backInLeft animate__faster',
+                    //在满足one小于name长度情况下，字体为偶数的动画样式(总共三个样式)，不满足情况下为基数(总共2个样式)
+                    twoClass: 'animate__bounceInDown',
+                    //在满足one小于name长度情况下，字体为基数的动画样式(总共三个样式)，不满足情况下为偶数(总共2个样式)
+                    threeClass: 'animate__bounceInUp',
+                    //在满足one小于name长度情况下，第一个字体的颜色(总共三个样式)，不满足情况下这个颜色没用(总共2个样式)
+                    aa:'red  !important',
+                    //在满足one小于name长度情况下，字体为偶数的动画样式(总共三个样式)，不满足情况下为基数(总共2个样式)
+                    bb:'white',
+                    //在满足one小于name长度情况下，字体为基数的动画样式(总共三个样式)，不满足情况下为偶数(总共2个样式)
+                    cc:'cyan !important',
+
+                }
             }
 
         },
-        components: {},
+        components: {
+            test,
+        },
         methods: {
             autoPlayAudio() {
                 this.$EventBus.$emit('isPlay', true)
@@ -150,10 +173,10 @@
         },
         created() {
             let aData = new Date().getHours();
-            if (aData>7&&aData<19){
-                this.bj=1;
-            }else {
-                this.bj=2;
+            if (aData > 7 && aData < 19) {
+                this.bj = 1;
+            } else {
+                this.bj = 2;
             }
 
             let count = 0;
@@ -185,6 +208,7 @@
 
 <style scoped lang="scss">
     @import '../assets/css/cssanimation.css';
+
     .container {
         width: 100%;
         height: 100vh;
@@ -196,6 +220,14 @@
         position: relative;
     }
 
+    .fon1 {
+        right: -56.5%;
+        top: -40.3%;
+        position: absolute;
+        font-size: 0.5rem;
+        letter-spacing: 3px;
+
+    }
 
     .loader {
         bottom: 2%;
@@ -209,10 +241,11 @@
         animation: load 2s linear infinite;
     }
 
-    .daytime{
+    .daytime {
         background: linear-gradient(#d8b9d7 50%, #ffc0cb);
     }
-    .night{
+
+    .night {
         background: linear-gradient(#383838 50%, #1a1f26);
 
     }
@@ -247,17 +280,26 @@
 
         li:nth-child(4) {
             animation-delay: -.8s;
-            box-shadow: 2px 2px 5px #fff;width: 15px;height: 15px;margin-top: 5%;
+            box-shadow: 2px 2px 5px #fff;
+            width: 15px;
+            height: 15px;
+            margin-top: 5%;
         }
 
         li:nth-child(5) {
             animation-delay: -.6s;
-            box-shadow: 2px 2px 5px #fff;width: 15px;height: 15px;margin-top: 5%;
+            box-shadow: 2px 2px 5px #fff;
+            width: 15px;
+            height: 15px;
+            margin-top: 5%;
         }
 
         li:nth-child(6) {
             animation-delay: -.4s;
-            box-shadow: 2px 2px 5px #fff;width: 15px;height: 15px;margin-top: 5%;
+            box-shadow: 2px 2px 5px #fff;
+            width: 15px;
+            height: 15px;
+            margin-top: 5%;
         }
 
         li {
@@ -410,14 +452,14 @@
         top: 57%;
         left: 33.5%;
         z-index: 10;
-        background:
-        radial-gradient(12% 8% at 58% 62%, #efdebd .5vmin, transparent .7vmin),
+        background: radial-gradient(12% 8% at 58% 62%, #efdebd .5vmin, transparent .7vmin),
         radial-gradient(10% 8% at 59% 63%, rgba(0, 0, 0, 0.8) .4vmin, transparent .5vmin),
         linear-gradient(-50deg, transparent 47%, #efdebd 46.5%),
         linear-gradient(50deg, transparent 52%, #efdebd 51.5%),
         radial-gradient(2.4% 2% at 54% 72%, #efdebd 1.9vmin, transparent 2.1vmin),
-        radial-gradient(2.2% 1.2% at 54% 77%, rgba(0, 0, 0, 0.8) 2vmin, transparent 2.2vmin),#efdebd
+        radial-gradient(2.2% 1.2% at 54% 77%, rgba(0, 0, 0, 0.8) 2vmin, transparent 2.2vmin), #efdebd
     }
+
     /*这里是眼睛*/
     .head__face:before, .head__face:after {
         content: '';
@@ -451,6 +493,7 @@
         left: 13%;
         transform: rotateZ(4deg)
     }
+
     /*帽子两根毛*/
     .head__hat:after, .head__hat:before {
         content: '';
@@ -458,9 +501,8 @@
         height: 30%;
         display: block;
         position: absolute;
-        background:
-       radial-gradient(1% 1.5% at 20% 120%, transparent 3vmin, #000 3.1vmin, #000 5vmin, transparent 5.1vmin),
-       radial-gradient(2.2% 1.5% at 22% 107%, transparent 3vmin, #000 3.2vmin, #000 6vmin, transparent 6vmin)
+        background: radial-gradient(1% 1.5% at 20% 120%, transparent 3vmin, #000 3.1vmin, #000 5vmin, transparent 5.1vmin),
+        radial-gradient(2.2% 1.5% at 22% 107%, transparent 3vmin, #000 3.2vmin, #000 6vmin, transparent 6vmin)
     }
 
     .head__hat:before {
@@ -498,9 +540,8 @@
         transform: rotate(-3deg);
         top: 0;
         left: 3%;
-        background:
-                linear-gradient(-72.8deg, transparent 35%, #010152 35.5%, #010152 77.3%, transparent 77.7%),
-                linear-gradient(74deg, transparent 42%, #010152 42.5%, #010152 78%, transparent 78.5%)
+        background: linear-gradient(-72.8deg, transparent 35%, #010152 35.5%, #010152 77.3%, transparent 77.7%),
+        linear-gradient(74deg, transparent 42%, #010152 42.5%, #010152 78%, transparent 78.5%)
     }
 
     .body:after {
@@ -702,10 +743,12 @@
         box-shadow: 0 0 2px 2px #fff;
 
     }
+
     .cloud {
         border: 50px solid #fff;
 
     }
+
     .cloud:after {
         content: "";
         border: 24px solid #fff;
@@ -726,38 +769,84 @@
         top: -12px;
         left: -90px;
     }
-    .one{
+
+    .one {
         left: 20%;
         animation: shadow1 8s infinite;
     }
-    .two{
+
+    .two {
         left: 60%;
         animation: shadow2 10s infinite;
     }
-    .three{
+
+    .three {
         left: 35%;
         animation: shadow3 9s infinite;
     }
 
     @keyframes shadow1 {
-        0%{top:120%;opacity: 0.4;}
-        50%,56%,62%{top:10%;transform: scaleX(1);}
-        53%,59%{top:10%;transform: scaleX(1.2);}
-        100% {top:-20%;opacity: 0.4;}
+        0% {
+            top: 120%;
+            opacity: 0.4;
+        }
+        50%, 56%, 62% {
+            top: 10%;
+            transform: scaleX(1);
+        }
+        53%, 59% {
+            top: 10%;
+            transform: scaleX(1.2);
+        }
+        100% {
+            top: -20%;
+            opacity: 0.4;
+        }
     }
+
     @keyframes shadow2 {
-        0%{top:120%;opacity: 0.6;transform: scale(0.5);}
-        65%,70%,77%{top:40%;transform: scale(0.5);}
-        68%,74%{opacity: 0.7;top:40%;transform: scale(0.7,0.6);}
-        100% {top:-20%;opacity: 0.6;transform: scale(0.5);}
+        0% {
+            top: 120%;
+            opacity: 0.6;
+            transform: scale(0.5);
+        }
+        65%, 70%, 77% {
+            top: 40%;
+            transform: scale(0.5);
+        }
+        68%, 74% {
+            opacity: 0.7;
+            top: 40%;
+            transform: scale(0.7, 0.6);
+        }
+        100% {
+            top: -20%;
+            opacity: 0.6;
+            transform: scale(0.5);
+        }
     }
 
     @keyframes shadow3 {
-        0%{top:120%;opacity: 0.5;transform: scale(0.8);}
-        64%,68%,72%{top:35%;transform: scale(0.8);}
-        66%,70%{top:35%;transform: scale(0.5,0.8);}
-        100% {top:-10%;opacity: 0.5;transform: scale(0.8);}
+        0% {
+            top: 120%;
+            opacity: 0.5;
+            transform: scale(0.8);
+        }
+        64%, 68%, 72% {
+            top: 35%;
+            transform: scale(0.8);
+        }
+        66%, 70% {
+            top: 35%;
+            transform: scale(0.5, 0.8);
+        }
+        100% {
+            top: -10%;
+            opacity: 0.5;
+            transform: scale(0.8);
+        }
     }
+
     /*moon*/
     .moon {
         width: 1.5rem;
@@ -772,18 +861,20 @@
         border-radius: 1.5rem;
         right: 9%;
         top: 15%;
-        &:before{
+
+        &:before {
 
             content: '';
             width: 1.5rem;
             height: 1.5rem;
-            background:#383838;
+            background: #383838;
             position: absolute;
             border-radius: 1.5rem;
             right: 0.3rem;
 
         }
     }
+
     /*    star*/
     .star-five {
         top: 10%;
@@ -793,15 +884,16 @@
         color: white;
         width: 0;
         height: 0;
-        border-right:  0.5rem solid transparent;
-        border-bottom: 0.3rem  solid white;
-        border-left:   0.5rem solid transparent;
-        -moz-transform:    rotate(35deg);
+        border-right: 0.5rem solid transparent;
+        border-bottom: 0.3rem solid white;
+        border-left: 0.5rem solid transparent;
+        -moz-transform: rotate(35deg);
         -webkit-transform: rotate(35deg);
-        -ms-transform:     rotate(35deg);
-        -o-transform:      rotate(35deg);
+        -ms-transform: rotate(35deg);
+        -o-transform: rotate(35deg);
         animation: star 10s infinite;
-        &:before{
+
+        &:before {
             content: '';
             border-bottom: 0.4rem solid white;
             border-left: 0.15rem solid transparent;
@@ -813,11 +905,12 @@
             left: -0.300rem;
             display: block;
             -webkit-transform: rotate(-35deg);
-            -moz-transform:    rotate(-35deg);
-            -ms-transform:     rotate(-35deg);
-            -o-transform:      rotate(-35deg);
+            -moz-transform: rotate(-35deg);
+            -ms-transform: rotate(-35deg);
+            -o-transform: rotate(-35deg);
         }
-        &:after{
+
+        &:after {
             content: '';
             position: absolute;
             display: block;
@@ -829,33 +922,55 @@
             border-bottom: 0.3rem solid white;
             border-left: 0.5rem solid transparent;
             -webkit-transform: rotate(-70deg);
-            -moz-transform:    rotate(-70deg);
-            -ms-transform:     rotate(-70deg);
-            -o-transform:      rotate(-70deg);
+            -moz-transform: rotate(-70deg);
+            -ms-transform: rotate(-70deg);
+            -o-transform: rotate(-70deg);
         }
     }
+
     @keyframes star {
-        0%,100%{opacity: 0.7;transform: scale(0.2);}
-        50% {opacity: 0.7;transform: scale(0.3);}
+        0%, 100% {
+            opacity: 0.7;
+            transform: scale(0.2);
+        }
+        50% {
+            opacity: 0.7;
+            transform: scale(0.3);
+        }
     }
-    .logo{
+
+    .logo {
         z-index: 999;
         position: fixed;
         height: 1rem;
-        color:cadetblue ;
+        color: cadetblue;
         font-size: 0.5rem;
     }
-    .leBeat{ animation-name: leBeat; }
-    @keyframes leBeat {
-        14%, 42% { transform: scale(1.3) }
-        28%, 70% { transform: scale(1) }
+
+    .leBeat {
+        animation-name: leBeat;
     }
-    .leRotateInLeft{ animation-name: leRotateInLeft }
+
+    @keyframes leBeat {
+        14%, 42% {
+            transform: scale(1.3)
+        }
+        28%, 70% {
+            transform: scale(1)
+        }
+    }
+
+    .leRotateInLeft {
+        animation-name: leRotateInLeft
+    }
+
     @keyframes leRotateInLeft {
         from {
             transform: rotate(-180deg) translateX(150px);
             opacity: 0;
         }
-        to { opacity: 1 }
+        to {
+            opacity: 1
+        }
     }
 </style>
