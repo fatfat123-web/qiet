@@ -82,7 +82,7 @@
                     //需要做动效显示的字
                     name: '这里是显示的字体啊啊',
                     //one的数量决定第一个动画里显示的字数，如果one大于name的长度只会开启两个动画  所有的动画参考 https://animate.style/
-                    one: -4,
+                    one: 4,
                     //在满足one小于name长度情况下，第一个字体动画的样式(总共三个样式)  animate__faster快速
                     oneClass: 'animate__backInLeft animate__fast',
                     //在满足one小于name长度情况下，字体为偶数的动画样式(总共三个样式)，不满足情况下为基数(总共2个样式)
