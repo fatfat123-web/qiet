@@ -3,11 +3,10 @@
         <div class="logo"></div>
         <div class="swiper-container" id="banner">
             <div class="swiper-wrapper">
-                <div v-for="item in max.length" :key="item" class="swiper-slide " :style="{background: max[item-1]}">
+                <div v-for="item in max.length" :key="item" class="swiper-slide" :style="{background: max[item-1]}">
                     <div v-if="item===1" class="headline">阿姨别这样</div>
                     <test v-if="item===2&&ss===1" :open="open" class="test"></test>
                     <img v-if="item===3" class="show" src="../assets/images/4.4.png" height="354" width="457"/>
-
                     <form v-show="item===5" class="fo">
                        <span>您的名字啊~</span>
                         <input type="text" v-model="form.name">
@@ -16,7 +15,6 @@
                         <br><br>
                         <input type="submit" value="提交">
                     </form>
-
                     <div style="color: white">{{item}}</div>
                 </div>
             </div>
@@ -32,8 +30,6 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 </template>
@@ -47,11 +43,11 @@
         data() {
             return {
                 max: [
-                    `url(${require('../assets/images/maxa.jpg')}) 0% 0% /100% 100% no-repeat`,
-                    `url(${require('../assets/images/maxb.jpg')}) 0% 0% /100% 100% no-repeat`,
-                    `url(${require('../assets/images/maxc.jpg')}) 0% 0% /100% 100% no-repeat`,
-                    `url(${require('../assets/images/maxd.jpg')}) 0% 0% /100% 100% no-repeat`,
-                    `url(${require('../assets/images/bj.jpg')}) 0% 0% /100% 100% no-repeat`,
+                    `url(${require('../assets/images/maxa.jpg')})`,
+                    `url(${require('../assets/images/maxb.jpg')})`,
+                    `url(${require('../assets/images/maxc.jpg')})`,
+                    `url(${require('../assets/images/maxd.jpg')})`,
+                    `url(${require('../assets/images/bj.jpg')})`,
                 ],
                 img: [
                     {
@@ -86,7 +82,7 @@
                     //需要做动效显示的字
                     name: '这里是显示的字体啊啊',
                     //one的数量决定第一个动画里显示的字数，如果one大于name的长度只会开启两个动画  所有的动画参考 https://animate.style/
-                    one: 4,
+                    one: -4,
                     //在满足one小于name长度情况下，第一个字体动画的样式(总共三个样式)  animate__faster快速
                     oneClass: 'animate__backInLeft animate__fast',
                     //在满足one小于name长度情况下，字体为偶数的动画样式(总共三个样式)，不满足情况下为基数(总共2个样式)
@@ -154,7 +150,6 @@
                             //每次进入时候 触发的索引
                             let activeIndex = this.activeIndex
                             _this.ss = activeIndex;
-
                             for (let i = 0; i < thumbSwiper.length; i++) {
                                 if (i === activeIndex) {
                                     thumbSwiper[i].slideTo(1);
@@ -166,25 +161,15 @@
                         transitionEnd() {
                             let slide = this.slides.eq(this.activeIndex);
                             slide.addClass('ani-slide');
-
                         },
-
                     }
                 });
                 thumbSwiper[0].slideTo(1, 0)
             },
-
-
-            // test() {
-            //
-            //     console.log(this.ss)
-            // },
             gtouchstart() {
                 this.$EventBus.$emit("isPlay", true);
                 let aa = document.getElementById('music')
                 aa.play();
-
-
             },
         }
     }
@@ -204,6 +189,7 @@
 
     #banner .swiper-slide {
         overflow: hidden;
+        background-size:100% 100% !important;
 
     }
 

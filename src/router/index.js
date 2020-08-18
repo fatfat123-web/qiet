@@ -30,6 +30,11 @@ const routes = [
     path: '/test',
     component: () => import('@/views/test')
   },
+  {
+    path: '/abbrs',
+    component: () => import('@/views/abbrs')
+  },
+
 
 ]
 const originalPush = VueRouter.prototype.push

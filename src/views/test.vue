@@ -34,7 +34,6 @@
         methods: {
             jump(n, s) {
                 let helloArr = n.split('');
-                this.kg= (s>n.length)?true:false
                 let timer = setInterval(() => {
                     if (this.time === 0&&s!==0&&n.length>s) {
                         this.kg=true
@@ -54,7 +53,6 @@
                             this.cd=0
                             this.new = helloArr.splice(0, 1)
                             this.fon.push(this.new[0])
-                            console.log(this.fon)
                         }
                     }
                     this.time++
