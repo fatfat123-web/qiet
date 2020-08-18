@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style type="text/css">
+
+    .rect-wrap {
+        position:relative;
+        perspective:2000px;
+    }
+    .container {
+        width:400px;
+        height:400px;
+        transform-style:preserve-3d;
+        transform-origin:50% 50% 100px;
+        /* //设置3d空间的原点在平面中心再向Z轴移动200px的位置 */
+        /* left:50%;
+  margin-left:-200px;
+  */
+        top:100px;
+    }
+    .slide {
+        width:200px;
+        height:200px;
+        position:absolute;
+        background:#000;
+        line-height:200px;
+        text-align:center;
+        color:#fff;
+        font-size:30px;
+        font-weight:bold;
+    }
+    .top {
+        left:100px;
+        top:-100px;
+        transform:rotateX(-90deg);
+        transform-origin:bottom;
+        background:red;
+    }
+    /* .top:hover {
+        transform:rotateX(-90deg);
+        transform-origin:bottom;
+        transition:3s;
+    }
+    */
+    .bottom {
+        left:100px;
+        bottom:-100px;
+        transform:rotateX(90deg);
+        transform-origin:top;
+        background:grey;
+    }
+    .left {
+        left:-100px;
+        bottom:100px;
+        transform:rotateY(90deg);
+        transform-origin:right;
+        background:green;
+    }
+    .right {
+        left:300px;
+        bottom:100px;
+        transform:rotateY(-90deg);
+        transform-origin:left;
+        background:yellow;
+    }
+    .front {
+        left:100px;
+        top:100px;
+        transform:translateZ(200px);
+        background:black;
+    }
+    .back {
+        left:100px;
+        top:100px;
+        transform:translateZ(0);
+        background:blue;
+    }
+
+
+</style>
+<body>
+<div class="rect-wrap">
+
+    <div class="container">
+
+        <div class="top slide">1</div>
+        <div class="bottom slide">2</div>
+        <div class="left slide">3</div>
+        <div class="right slide">4</div>
+        <div class="front slide">5</div>
+        <div class="back slide">6</div>
+    </div>
+</div>
+</body>
+</html>

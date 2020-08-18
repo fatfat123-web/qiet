@@ -3,15 +3,19 @@
         <div class="swiper-container">
             <div class="swiper-wrapper">
                 <template v-if="somersault===true">
+
+<!--                    :style="{backgroundImage: side[0],backgroundPositionY:-(newHeight*2*(item-1))+'px',left:newWidth,zIndex:item*2,top:(newHeight*2*(item-1))+'px'}"-->
+
                     <div class="int1" style="background-size:100% 100%;  height: 100%;z-index: 10" v-for="item in 5"
-             :style="{backgroundImage: side[0],backgroundPositionY:-(newHeight*2*(item-1))+'px',left:newWidth,zIndex:item*2,top:(newHeight*2*(item-1))+'px'}"
+             :style="variation(item)"
                     >{{item}}
                     </div>
 
                 </template>
-                <!--                    aa是图片的地址-->
+
                 <input v-if="cc!==4" @click.prevent="advance()" type="button" class="advance" value="前进">
                 <input v-if="cc!==0" @click.prevent="retreat()" type="button" class="retreat" value="后退">
+                <!--                    aa是图片的地址-->
                 <template v-for="(aa,item) in max" >
                 <div :key="item" class="swiper-slide " style="z-index: 3"
                      :style="{background: max[item]}" >
@@ -57,6 +61,15 @@
             }
         },
         methods: {
+            variation(item){
+                let cc=' ';
+                return { backgroundImage: this.side[0],
+                         backgroundPosition:0+'px'+cc+(-(this.newHeight*2*(item-1))+'px'),
+                        left:this.newWidth,zIndex:item*2,
+                        top:(this.newHeight*2*(item-1))+'px',
+                }
+            },
+
             advance() {
                 this.somersault = true;
                 console.log(this.newHeight)
