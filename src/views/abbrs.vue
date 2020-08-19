@@ -1,28 +1,22 @@
 <template>
     <div class="container">
         <div class="swiper-container">
-            <div class="swiper-wrapper">
+            <div class="swiper-wrapper" style="    perspective: 2000px;">
                 <template v-if="somersault===true">
-
-<!--                    :style="{backgroundImage: side[0],backgroundPositionY:-(newHeight*2*(item-1))+'px',left:newWidth,zIndex:item*2,top:(newHeight*2*(item-1))+'px'}"-->
-
-                    <div class="int1" style="background-size:100% 100%;  height: 100%;z-index: 10" v-for="item in 5"
-             :style="variation(item)"
-                    >{{item}}
-                    </div>
-
+                  <!--     点击按钮的时候，要出现2个新的页面覆盖才能达到效果-->
+                     <!--     第一个页面为int1-->
+                    <div class="int1"  v-for="item in 5" :style="variation(item)">{{item}}</div>
+                    <!--     第二个页面为int2-->
                 </template>
 
                 <input v-if="cc!==4" @click.prevent="advance()" type="button" class="advance" value="前进">
                 <input v-if="cc!==0" @click.prevent="retreat()" type="button" class="retreat" value="后退">
                 <!--                    aa是图片的地址-->
-                <template v-for="(aa,item) in max" >
-                <div :key="item" class="swiper-slide " style="z-index: 3"
-                     :style="{background: max[item]}" >
-                    {{item}}
-
-                </div>
-                    </template>
+                <template v-for="(aa,item) in max">
+                    <div :key="item" class="swiper-slide " style="z-index: 3" :style="{background: max[item]}">
+                        {{item}}
+                    </div>
+                </template>
 
             </div>
 
@@ -57,16 +51,17 @@
                 somersault: false,
                 newHeight: 0,
                 newWidth: 0,
-
             }
         },
         methods: {
-            variation(item){
-                let cc=' ';
-                return { backgroundImage: this.side[0],
-                         backgroundPosition:0+'px'+cc+(-(this.newHeight*2*(item-1))+'px'),
-                        left:this.newWidth,zIndex:item*2,
-                        top:(this.newHeight*2*(item-1))+'px',
+            variation(item) {
+                return {
+                    backgroundImage: this.side[0],
+                    backgroundPosition: 0 + 'px' + ' ' + (-(this.newHeight * 2 * (item - 1)) + 'px'),
+                    left: this.newWidth, zIndex: item * 2,
+                    top: (this.newHeight * 2 * (item - 1)) + 'px',
+                    transform: "rotateX(" + item * 90 + "deg)",
+                    // perspective: 2000+'px',
                 }
             },
 
@@ -83,7 +78,6 @@
                         clearInterval(timer)
                     }
                 }, 1000)
-
 
             },
             retreat() {
@@ -180,5 +174,7 @@
         position: absolute;
         top: 0;
         width: 100%;
+        background-size: 100% 100% !important;
+        height: 100%;
     }
 </style>

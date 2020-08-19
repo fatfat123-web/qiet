@@ -7,13 +7,21 @@
                     <div v-if="item===1" class="headline">阿姨别这样</div>
                     <test v-if="item===2&&ss===1" :open="open" class="test"></test>
                     <img v-if="item===3" class="show" src="../assets/images/4.4.png" height="354" width="457"/>
+                    <div v-if="item===4" class="uploading">
+                        <img :src="pic" style="position: absolute;top: 30%;left: 30%;width: 200px;height: 200px;">
+                        <input type="button" style="position:absolute;z-index:4;top: 20%;width: 25% " value="点我上传" >
+<!--                        @click="uploading()"-->
+                        <input type="file" style="position:absolute;z-index:5;top: 20% ;width: 25%;opacity: 0" @change="getFile" ref="inputer" >
+                    </div>
                     <form v-show="item===5" class="fo">
                        <span>您的名字啊~</span>
                         <input type="text" v-model="form.name">
                         <span>您的联系方式~</span>
                         <input type="text" v-model="form.phone">
                         <br><br>
-                        <input type="submit" value="提交">
+                        <label >
+                        <input type="submit" value="提交" @click.prevent="tj()">
+                        </label>
                     </form>
                     <div style="color: white">{{item}}</div>
                 </div>
@@ -49,6 +57,7 @@
                     `url(${require('../assets/images/maxd.jpg')})`,
                     `url(${require('../assets/images/bj.jpg')})`,
                 ],
+                pic:'',
                 img: [
                     {
                         serial: require('../assets/images/1.jpg'),
@@ -103,12 +112,26 @@
             this.swiper();
 
         },
-        watch: {},
+        watch: {
+
+        },
         components: {
             test,
         },
 
         methods: {
+            getFile(e){
+                let files =e.target.files
+                console.log(files)
+            },
+            // uploading(){
+            //
+            //     console.log(this.$refs.inputer.files)
+            // },
+
+            tj(){
+                console.log(this.form)
+              },
             swiper() {
                 const _this = this
                 let thumbSwiper = new Swiper('.thumb', {
@@ -349,5 +372,14 @@
         z-index: 3;
         width: 100%;
         top: -20%;
+    }
+    .uploading{
+        position:absolute;
+        top: 10%;
+        left: 10%;
+        width: 80%;
+        height: 60%;
+        background-color: rgba(255, 115, 215, 0.4);
+        z-index: 3;
     }
 </style>

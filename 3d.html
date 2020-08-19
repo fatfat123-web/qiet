@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style type="text/css">
+    .rect-wrap {
+        position:relative;
+        perspective:2000px;
+    }
+    .right {
+        left: 300px;
+        top: 381px;
+        transform: rotateY(-90deg);
+        transform-origin: left;
+        background: #ff00a5;
+    }
+    .front {
+        left: 100px;
+        top: 381px;
+        transform: translateZ(200px);
+        background: black;
+    }
+    .slide {
+        width:200px;
+        height:200px;
+        position:absolute;
+        line-height:200px;
+        text-align:center;
+        color:#fff;
+        font-size:30px;
+        font-weight:bold;
+    }
+</style>
+<body>
+<div class="rect-wrap">
+
+        <div class="right slide">4</div>
+        <div class="front slide">5</div>
+
+</div>
+</body>
+</html>
