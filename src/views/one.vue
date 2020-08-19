@@ -49,7 +49,7 @@
 </template>
 
 <script>
-    import {TimelineLite} from 'gsap'
+
     import test from "./test";
 
     export default {
@@ -198,10 +198,6 @@
             }
         },
         mounted() {
-            // const { box } = this.$refs
-            // const timeline = new TimelineLite()
-            //
-            // timeline.to(box, 1, { x: 200, rotation: 90 })
         }
     }
 </script>

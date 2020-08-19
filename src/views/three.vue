@@ -3,24 +3,35 @@
         <div class="logo"></div>
         <div class="swiper-container" id="banner">
             <div class="swiper-wrapper">
-                <div v-for="item in max.length" :key="item" class="swiper-slide" :style="{background: max[item-1]}">
+                <div v-for="item in max.length" :key="item" class="swiper-slide" :id="`imageToFile${item}`" :style="{background: max[item-1]}">
                     <div v-if="item===1" class="headline">阿姨别这样</div>
                     <test v-if="item===2&&ss===1" :open="open" class="test"></test>
                     <img v-if="item===3" class="show" src="../assets/images/4.4.png" height="354" width="457"/>
-                    <div v-if="item===4" class="uploading">
-                        <img :src="pic" style="position: absolute;top: 30%;left: 30%;width: 200px;height: 200px;">
-                        <input type="button" style="position:absolute;z-index:4;top: 20%;width: 25% " value="点我上传" >
-<!--                        @click="uploading()"-->
-                        <input type="file" style="position:absolute;z-index:5;top: 20% ;width: 25%;opacity: 0" @change="getFile" ref="inputer" >
+<!--                    第四页-->
+                    <div v-if="item===4" class="uploading"  ref="imageToFile">
+                        <!-- 海报html元素 -->
+                        <div class="qr-code-box" >
+
+
+                            <button type="button" class="shot-btn" @click="screenShot">截图</button>
+
+                            <img  crossOrigin="anonymous" style="position: absolute;z-index:999;top:-10% " :src="img" v-if="img"/>
+                        </div>
+
+
+
+                        <img :src="pic" class="pic" v-if="pic" style=" width: 80%;height: auto;z-index: 3">
+                        <input type="button" class="bt1" value="点我上传">
+                        <input type="file" class="bt1" style="opacity: 0" @change="getFile" ref="inputer">
                     </div>
                     <form v-show="item===5" class="fo">
-                       <span>您的名字啊~</span>
+                        <span>您的名字啊~</span>
                         <input type="text" v-model="form.name">
                         <span>您的联系方式~</span>
                         <input type="text" v-model="form.phone">
                         <br><br>
-                        <label >
-                        <input type="submit" value="提交" @click.prevent="tj()">
+                        <label>
+                            <input type="submit" style="margin-bottom: 5%;width: 35%" value="提交" @click.prevent="tj()">
                         </label>
                     </form>
                     <div style="color: white">{{item}}</div>
@@ -28,7 +39,7 @@
             </div>
         </div>
         <div class="thumb-list">
-            <div class="swiper-container thumb" :key="index" v-for="(item,index) in img">
+            <div class="swiper-container thumb" :key="index" v-for="(item,index) in imgA">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
                         <img :src="item.serial">
@@ -45,11 +56,18 @@
 <script>
     const Swiper = require('../assets/js/swiper.min')
     import test from "./test";
-
+    import html2canvas from 'html2canvas'
     export default {
         name: "three",
         data() {
             return {
+                config: {
+                    value: '',
+                    logo: require('../assets/images/1.jpg')
+                },
+                img: "",
+
+
                 max: [
                     `url(${require('../assets/images/maxa.jpg')})`,
                     `url(${require('../assets/images/maxb.jpg')})`,
@@ -57,8 +75,8 @@
                     `url(${require('../assets/images/maxd.jpg')})`,
                     `url(${require('../assets/images/bj.jpg')})`,
                 ],
-                pic:'',
-                img: [
+                pic: '',
+                imgA: [
                     {
                         serial: require('../assets/images/1.jpg'),
                         min: require('../assets/images/mina.jpg'),
@@ -80,6 +98,7 @@
                         min: require('../assets/images/minb.jpg'),
                     },
                 ],
+                aaaa:false,
                 aa: '',
                 transmit: null,
                 ss: null,
@@ -109,29 +128,55 @@
         },
         computed: {},
         mounted() {
+            this.config.value = "https://www.baidu.com/";
+
             this.swiper();
 
         },
-        watch: {
-
-        },
+        watch: {},
         components: {
             test,
+            html2canvas
         },
 
         methods: {
-            getFile(e){
-                let files =e.target.files
-                console.log(files)
-            },
-            // uploading(){
-            //
-            //     console.log(this.$refs.inputer.files)
-            // },
+            productionImage(){
 
-            tj(){
+
+            },
+            screenShot() {
+                html2canvas(document.getElementById('imageToFile4'), {
+
+                    useCORS: true,
+                    backgroundColor:null,
+
+                    width: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
+                    height: window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
+                }).then((canvas) => {// 第一个参数是需要生成截图的元素,第二个是自己需要配置的参数,宽高等
+                    this.img = canvas.toDataURL('image/png');
+                })
+            },
+
+            getFile(e) {
+                let file = e.target.files
+                const isRuleImg = file[0].type === 'image/jpeg' || file[0].type === 'image/png' || file[0].type === 'image/gif';
+                const isLt2M = file[0].size / 1024 / 1024 < 5;
+                if (!isRuleImg) {
+                    alert('上传图片只能是 JPG/PNG/GIF 格式!')
+                    return
+                }
+                if (!isLt2M) {
+                    alert('上传图片大小不能超过 5MB!')
+                    return
+                }
+
+                this.pic = window.URL.createObjectURL(file[0])
+
+            },
+
+            tj() {
                 console.log(this.form)
-              },
+            },
             swiper() {
                 const _this = this
                 let thumbSwiper = new Swiper('.thumb', {
@@ -212,7 +257,7 @@
 
     #banner .swiper-slide {
         overflow: hidden;
-        background-size:100% 100% !important;
+        background-size: 100% 100% !important;
 
     }
 
@@ -340,17 +385,20 @@
         padding: 5% 0 0 0;
         font-size: 0.3rem;
         text-align: center;
-        border:1px solid;
+        border: 1px solid;
         border-color: #00ffff #ffffff #00ccff #ffffff;
-        input{
-            height:0.5rem;
+
+        input {
+            height: 0.5rem;
         }
-        span{
+
+        span {
             line-height: 0.9rem;
             width: 100%;
             height: 0.9rem;
-            display:inline-block;
+            display: inline-block;
         }
+
         input:nth-child(-n+4) {
             background: rosybrown;
             opacity: 0.7;
@@ -358,7 +406,7 @@
         }
 
         input:nth-child(7) {
-            background:#d8b9d7;
+            background: #d8b9d7;
             width: 100px;
             height: 30px;
             margin: 2% 0 10% 0;
@@ -373,13 +421,30 @@
         width: 100%;
         top: -20%;
     }
-    .uploading{
-        position:absolute;
-        top: 10%;
+
+    .uploading {
+        position: absolute;
+        top: 16%;
         left: 10%;
         width: 80%;
         height: 60%;
         background-color: rgba(255, 115, 215, 0.4);
         z-index: 3;
+        border-color: #00ffff #ffffff #00ccff #ffffff;
     }
+
+    .pic {
+        position: absolute;
+        top: 30%;
+        left: 10%;
+    }
+
+    .bt1 {
+        position: absolute;
+        top: 85%;
+        width: 25%;
+        height: 6%;
+        left: 30%;
+    }
+
 </style>
