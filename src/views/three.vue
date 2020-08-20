@@ -1,29 +1,31 @@
 <template>
-    <div @touchstart.prevent.once="gtouchstart()" style="width:100%; height:100%; position:absolute;">
+    <div @touchstart.prevent.once="gtouchStart()" style="width:100%; height:100%; position:absolute;">
         <div class="logo"></div>
         <div class="swiper-container" id="banner">
             <div class="swiper-wrapper">
-                <div v-for="item in max.length" :key="item" class="swiper-slide" :id="`imageToFile${item}`" :style="{background: max[item-1]}">
+                <div v-for="item in max.length" :key="item" class="swiper-slide" :id="`imageToFile${item}`"
+                     :style="{background: max[item-1]}">
+                    <!--                    第一页-->
                     <div v-if="item===1" class="headline">阿姨别这样</div>
-                    <test v-if="item===2&&ss===1" :open="open" class="test"></test>
+                    <!--                    第二页 ss===1只有在当前页的时候才显示-->
+                    <test v-if="item===2&&ss===1" :open="open1" class="test"></test>
+                    <!--                    第三页 -->
+                    <test v-if="item===3&&ss===2" :open="open2" class="test"></test>
                     <img v-if="item===3" class="show" src="../assets/images/4.4.png" height="354" width="457"/>
-<!--                    第四页-->
-                    <div v-if="item===4" class="uploading"  ref="imageToFile">
+                    <!--                    第四页-->
+                    <div v-if="item===4" class="uploading" ref="imageToFile">
                         <!-- 海报html元素 -->
-                        <div class="qr-code-box" >
-
-
-                            <button type="button" class="shot-btn" @click="screenShot">截图</button>
-
-                            <img  crossOrigin="anonymous" style="position: absolute;z-index:999;top:-10% " :src="img" v-if="img"/>
-                        </div>
-
-
-
-                        <img :src="pic" class="pic" v-if="pic" style=" width: 80%;height: auto;z-index: 3">
-                        <input type="button" class="bt1" value="点我上传">
-                        <input type="file" class="bt1" style="opacity: 0" @change="getFile" ref="inputer">
+                        <div v-if="img" @click="img=''" class="close">关闭</div>
+                        <img crossOrigin="anonymous" style="position: absolute;z-index:99;top:-10% " :src="img" v-if="img"/>
+                        <span class="hint" v-if="hint">{{hint=== 0?'':hint===1 ? '上传的图片格式不对哦':'图片太大了请选择3m以下的呀'}}</span>
+                        <img :src="pic" class="pic" v-if="pic" style=" width: 60%;height: auto;z-index: 3">
+                        <template v-if="conceal">
+                            <button type="button"  class="bt1" style="  left: 60%;" @click="screenShot">点我截图</button>
+                            <input type="button" class="bt1" value="点我上传">
+                            <input type="file" class="bt1" style="opacity: 0" @change="getFile" ref="inputer">
+                        </template>
                     </div>
+                    <!--                    第五页-->
                     <form v-show="item===5" class="fo">
                         <span>您的名字啊~</span>
                         <input type="text" v-model="form.name">
@@ -57,17 +59,11 @@
     const Swiper = require('../assets/js/swiper.min')
     import test from "./test";
     import html2canvas from 'html2canvas'
+
     export default {
         name: "three",
         data() {
             return {
-                config: {
-                    value: '',
-                    logo: require('../assets/images/1.jpg')
-                },
-                img: "",
-
-
                 max: [
                     `url(${require('../assets/images/maxa.jpg')})`,
                     `url(${require('../assets/images/maxb.jpg')})`,
@@ -75,7 +71,6 @@
                     `url(${require('../assets/images/maxd.jpg')})`,
                     `url(${require('../assets/images/bj.jpg')})`,
                 ],
-                pic: '',
                 imgA: [
                     {
                         serial: require('../assets/images/1.jpg'),
@@ -98,15 +93,18 @@
                         min: require('../assets/images/minb.jpg'),
                     },
                 ],
-                aaaa:false,
+                img: '',
+                pic: '',
                 aa: '',
+                conceal: true,
                 transmit: null,
+                hint: '',
                 ss: null,
                 form: {
                     name: 'aaa',
                     phone: 1234,
                 },
-                open: {
+                open1: {
                     //需要做动效显示的字
                     name: '这里是显示的字体啊啊',
                     //one的数量决定第一个动画里显示的字数，如果one大于name的长度只会开启两个动画  所有的动画参考 https://animate.style/
@@ -123,118 +121,135 @@
                     bb: 'white',
                     //在满足one小于name长度情况下，字体为基数的动画样式(总共三个样式)，不满足情况下为偶数(总共2个样式)
                     cc: 'cyan !important',
-                }
+                },
+                open2: {
+                    //需要做动效显示的字
+                    name: '啊啊啊啊这里是第三页啊',
+                    //one的数量决定第一个动画里显示的字数，如果one大于name的长度只会开启两个动画  所有的动画参考 https://animate.style/
+                    one: 0,
+                    //在满足one小于name长度情况下，第一个字体动画的样式(总共三个样式)  animate__faster快速
+                    oneClass: 'animate__backInLeft animate__fast',
+                    //在满足one小于name长度情况下，字体为偶数的动画样式(总共三个样式)，不满足情况下为基数(总共2个样式)
+                    twoClass: 'animate__zoomInLeft animate__fast',
+                    //在满足one小于name长度情况下，字体为基数的动画样式(总共三个样式)，不满足情况下为偶数(总共2个样式)
+                    threeClass: 'animate__zoomInRight animate__fast',
+                    //在满足one小于name长度情况下，第一个字体的颜色(总共三个样式)，不满足情况下这个颜色没用(总共2个样式)
+                    aa: 'red  !important',
+                    //在满足one小于name长度情况下，字体为偶数的动画样式(总共三个样式)，不满足情况下为基数(总共2个样式)
+                    bb: 'white',
+                    //在满足one小于name长度情况下，字体为基数的动画样式(总共三个样式)，不满足情况下为偶数(总共2个样式)
+                    cc: 'cyan !important',
+                },
+
             };
         },
         computed: {},
         mounted() {
-            this.config.value = "https://www.baidu.com/";
-
-            this.swiper();
+            const _this = this
+            let thumbSwiper = new Swiper('.thumb', {
+                watchSlidesProgress: true,
+                effect: 'cube',
+                touchRatio: 0,
+                cubeEffect: {
+                    shadow: false,
+                },
+                on: {
+                    tap: function () {
+                        bannerSwiper.slideTo(this.$el.index(), 1, false);
+                    },
+                },
+            });
+            let bannerSwiper = new Swiper('#banner', {
+                mousewheel: true,
+                effect: 'coverflow',
+                speed: 1000,
+                watchSlidesProgress: true,
+                on: {
+                    init(swiper) {
+                        let slide = this.slides.eq(0);
+                        slide.addClass('ani-slide');
+                    },
+                    touchMove() {
+                        for (let i = 0; i < this.slides.length; i++) {
+                            let slideProgress = this.slides[i].progress
+                            if (Math.abs(slideProgress) < 1) {
+                                thumbSwiper[i].setTranslate(thumbSwiper[i].width * (Math.abs(slideProgress) - 1))
+                            }
+                        }
+                    },
+                    transitionStart() {
+                        for (let i = 0; i < this.slides.length; i++) {
+                            let slide = this.slides.eq(i);
+                            slide.removeClass('ani-slide');
+                        }
+                        //每次进入时候 触发的索引
+                        let activeIndex = this.activeIndex
+                        _this.ss = activeIndex;
+                        for (let i = 0; i < thumbSwiper.length; i++) {
+                            if (i === activeIndex) {
+                                thumbSwiper[i].slideTo(1);
+                            } else {
+                                thumbSwiper[i].slideTo(0);
+                            }
+                        }
+                    },
+                    transitionEnd() {
+                        let slide = this.slides.eq(this.activeIndex);
+                        slide.addClass('ani-slide');
+                    },
+                }
+            });
+            thumbSwiper[0].slideTo(1, 0)
 
         },
         watch: {},
         components: {
             test,
-            html2canvas
         },
-
         methods: {
-            productionImage(){
-
-
-            },
+            //生成海报
             screenShot() {
-                html2canvas(document.getElementById('imageToFile4'), {
-
-                    useCORS: true,
-                    backgroundColor:null,
-
-                    width: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
-                    height: window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
-                }).then((canvas) => {// 第一个参数是需要生成截图的元素,第二个是自己需要配置的参数,宽高等
-                    this.img = canvas.toDataURL('image/png');
-                })
+                this.conceal = false;
+                setTimeout(() => {
+                    html2canvas(document.getElementById('imageToFile4'), {
+                        scrollY: 0,
+                        scrollX: 0,
+                        useCORS: true,
+                        backgroundColor: null,
+                        width: document.documentElement.clientWidth,
+                        height: document.documentElement.clientHeight,
+                    }).then((canvas) => {// 第一个参数是需要生成截图的元素,第二个是自己需要配置的参数,宽高等
+                        this.img = canvas.toDataURL('image/png');
+                        this.conceal = true;
+                    })
+                }, 400)
             },
-
+            //验证格式
             getFile(e) {
                 let file = e.target.files
                 const isRuleImg = file[0].type === 'image/jpeg' || file[0].type === 'image/png' || file[0].type === 'image/gif';
-                const isLt2M = file[0].size / 1024 / 1024 < 5;
+                const isLt2M = file[0].size / 1024 / 1024 < 3;
                 if (!isRuleImg) {
-                    alert('上传图片只能是 JPG/PNG/GIF 格式!')
+                    this.hint = 1
                     return
                 }
                 if (!isLt2M) {
-                    alert('上传图片大小不能超过 5MB!')
+                    this.hint = 2
                     return
                 }
-
                 this.pic = window.URL.createObjectURL(file[0])
-
+                this.hint = 0
             },
-
-            tj() {
-                console.log(this.form)
+            //提交按钮
+            async tj() {
+                let form = JSON.parse(JSON.stringify(this.form));
+                const timestamp = new Date().getTime();
+                form.timestamp = timestamp;
+                console.log(form)
+                console.log(form.timestamp)
             },
-            swiper() {
-                const _this = this
-                let thumbSwiper = new Swiper('.thumb', {
-                    watchSlidesProgress: true,
-                    effect: 'cube',
-                    touchRatio: 0,
-                    cubeEffect: {
-                        shadow: false,
-                    },
-                    on: {
-                        tap: function () {
-                            bannerSwiper.slideTo(this.$el.index(), 1, false);
-                        },
-                    },
-                });
-                let bannerSwiper = new Swiper('#banner', {
-                    mousewheel: true,
-                    effect: 'coverflow',
-                    speed: 1000,
-                    watchSlidesProgress: true,
-                    on: {
-                        init(swiper) {
-                            let slide = this.slides.eq(0);
-                            slide.addClass('ani-slide');
-                        },
-                        touchMove() {
-                            for (let i = 0; i < this.slides.length; i++) {
-                                let slideProgress = this.slides[i].progress
-                                if (Math.abs(slideProgress) < 1) {
-                                    thumbSwiper[i].setTranslate(thumbSwiper[i].width * (Math.abs(slideProgress) - 1))
-                                }
-                            }
-                        },
-                        transitionStart() {
-                            for (let i = 0; i < this.slides.length; i++) {
-                                let slide = this.slides.eq(i);
-                                slide.removeClass('ani-slide');
-                            }
-                            //每次进入时候 触发的索引
-                            let activeIndex = this.activeIndex
-                            _this.ss = activeIndex;
-                            for (let i = 0; i < thumbSwiper.length; i++) {
-                                if (i === activeIndex) {
-                                    thumbSwiper[i].slideTo(1);
-                                } else {
-                                    thumbSwiper[i].slideTo(0);
-                                }
-                            }
-                        },
-                        transitionEnd() {
-                            let slide = this.slides.eq(this.activeIndex);
-                            slide.addClass('ani-slide');
-                        },
-                    }
-                });
-                thumbSwiper[0].slideTo(1, 0)
-            },
-            gtouchstart() {
+            //第一次触摸触发音乐
+            gtouchStart() {
                 this.$EventBus.$emit("isPlay", true);
                 let aa = document.getElementById('music')
                 aa.play();
@@ -364,14 +379,14 @@
     }
 
     .swiper-slide .show {
-        bottom: -200px;
+        bottom: -20%;
         opacity: 0;
-        transition: all 0.5s ease 1s;
+        transition: all 0.7s ease 0.5s;
 
     }
 
     .ani-slide .show {
-        bottom: 0;
+        bottom: 10%;
         opacity: 1;
     }
 
@@ -427,7 +442,7 @@
         top: 16%;
         left: 10%;
         width: 80%;
-        height: 60%;
+        height: 70%;
         background-color: rgba(255, 115, 215, 0.4);
         z-index: 3;
         border-color: #00ffff #ffffff #00ccff #ffffff;
@@ -435,8 +450,8 @@
 
     .pic {
         position: absolute;
-        top: 30%;
-        left: 10%;
+        top: 8%;
+        left: 20%;
     }
 
     .bt1 {
@@ -444,7 +459,25 @@
         top: 85%;
         width: 25%;
         height: 6%;
-        left: 30%;
+        left: 15%;
     }
 
+    .hint {
+        font-size: 0.3rem;
+        color: white;
+        position: absolute;
+        left: 25%;
+        bottom: 25%;
+    }
+    .close{
+        font-size: 0.3rem;
+        position: absolute;
+        left: 83%;
+        top: -5%;
+        background: #00ccff;
+        color: white;
+        z-index: 100;
+        padding: 2px;
+
+    }
 </style>

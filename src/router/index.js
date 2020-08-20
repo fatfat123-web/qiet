@@ -38,7 +38,10 @@ const routes = [
     path: '/newAbbr',
     component: () => import('@/views/newAbbr')
   },
-
+  {
+    path: '/drag',
+    component: () => import('@/views/drag')
+  },
 
 ]
 const originalPush = VueRouter.prototype.push
