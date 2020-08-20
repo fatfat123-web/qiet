@@ -16,13 +16,13 @@
                     <div v-if="item===4" class="uploading" ref="imageToFile">
                         <!-- 海报html元素 -->
                         <div v-if="img" @click="img=''" class="close">关闭</div>
-                        <img crossOrigin="anonymous" style="position: absolute;z-index:99;top:-10% " :src="img" v-if="img"/>
+                        <img crossOrigin="anonymous" class="newImg" :src="img" v-if="img"/>
                         <span class="hint" v-if="hint">{{hint=== 0?'':hint===1 ? '上传的图片格式不对哦':'图片太大了请选择3m以下的呀'}}</span>
-                        <img :src="pic" class="pic" v-if="pic" style=" width: 60%;height: auto;z-index: 3">
+                        <img :src="pic" class="pic" v-if="pic">
                         <template v-if="conceal">
-                            <button type="button"  class="bt1" style="  left: 60%;" @click="screenShot">点我截图</button>
+                            <button type="button" class="bt1" style="  left: 60%;" @click.prevent.stop="screenShot">点我截图</button>
                             <input type="button" class="bt1" value="点我上传">
-                            <input type="file" class="bt1" style="opacity: 0" @change="getFile" ref="inputer">
+                            <input type="file" class="bt1" style="opacity: 0" @change.prevent.stop="getFile" ref="inputer">
                         </template>
                     </div>
                     <!--                    第五页-->
@@ -216,8 +216,7 @@
                         scrollX: 0,
                         useCORS: true,
                         backgroundColor: null,
-                        width: document.documentElement.clientWidth,
-                        height: document.documentElement.clientHeight,
+                        taintTest: true, // 在渲染前测试图片
                     }).then((canvas) => {// 第一个参数是需要生成截图的元素,第二个是自己需要配置的参数,宽高等
                         this.img = canvas.toDataURL('image/png');
                         this.conceal = true;
@@ -228,7 +227,7 @@
             getFile(e) {
                 let file = e.target.files
                 const isRuleImg = file[0].type === 'image/jpeg' || file[0].type === 'image/png' || file[0].type === 'image/gif';
-                const isLt2M = file[0].size / 1024 / 1024 < 3;
+                const isLt2M = file[0].size / 1024 / 1024 < 5;
                 if (!isRuleImg) {
                     this.hint = 1
                     return
@@ -248,7 +247,7 @@
                 console.log(form)
                 console.log(form.timestamp)
             },
-            //第一次触摸触发音乐
+            //第一次触摸触发音乐 先不用有BUG
             gtouchStart() {
                 this.$EventBus.$emit("isPlay", true);
                 let aa = document.getElementById('music')
@@ -439,19 +438,23 @@
 
     .uploading {
         position: absolute;
-        top: 16%;
-        left: 10%;
-        width: 80%;
-        height: 70%;
-        background-color: rgba(255, 115, 215, 0.4);
+        /*top: 16%;*/
+        /*left: 10%;*/
+        width: 90%;
+        height: 90%;
+        top: 5%;
+        left: 5%;
+        /*background-color: rgba(255, 115, 215, 0.4);*/
         z-index: 3;
         border-color: #00ffff #ffffff #00ccff #ffffff;
     }
 
     .pic {
         position: absolute;
-        top: 8%;
-        left: 20%;
+        width: 100%;
+        height: auto;
+        z-index: 3;
+
     }
 
     .bt1 {
@@ -469,15 +472,23 @@
         left: 25%;
         bottom: 25%;
     }
-    .close{
+
+    .close {
         font-size: 0.3rem;
         position: absolute;
-        left: 83%;
-        top: -5%;
+        top: 12%;
+        right: 0;
         background: #00ccff;
         color: white;
         z-index: 100;
-        padding: 2px;
+        padding: 2% 4%;
+
+
+    }
+
+    .newImg {
+        position: absolute;
+        z-index: 99;
 
     }
 </style>
