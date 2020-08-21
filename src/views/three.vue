@@ -18,7 +18,7 @@
                         <div v-if="img" @click="img=''" class="close">关闭</div>
                         <img crossOrigin="anonymous" class="newImg" :src="img" v-if="img"/>
                         <span class="hint" v-if="hint">{{hint=== 0?'':hint===1 ? '上传的图片格式不对哦':'图片太大了请选择3m以下的呀'}}</span>
-                        <img :src="pic" class="pic" v-if="pic">
+                        <img :src="pic" class="pic" id="pic" v-if="pic">
                         <template v-if="conceal">
                             <button type="button" class="bt1" style="  left: 60%;" @click.prevent.stop="screenShot">点我截图</button>
                             <input type="button" class="bt1" value="点我上传">
@@ -224,7 +224,7 @@
                 }, 400)
             },
             //验证格式
-            getFile(e) {
+            async getFile(e) {
                 let file = e.target.files
                 const isRuleImg = file[0].type === 'image/jpeg' || file[0].type === 'image/png' || file[0].type === 'image/gif';
                 const isLt2M = file[0].size / 1024 / 1024 < 5;
@@ -238,6 +238,22 @@
                 }
                 this.pic = window.URL.createObjectURL(file[0])
                 this.hint = 0
+
+                EXIF.getData(file[0], function() {
+                    let orientation = EXIF.getTag(this,'Orientation');
+                  console.log(orientation);
+                  switch(orientation){
+                    case 6: // 需要顺时针（向左）90度旋转
+                      alert('需要顺时针（向左）90度旋转');
+                      break;
+                    case 8: // 需要逆时针（向右）90度旋转
+                      alert('需要顺时针（向右）90度旋转');
+                      break;
+                    case 3: // 需要180度旋转
+                      alert('需要180度旋转');
+                      break;
+                  }
+                })
             },
             //提交按钮
             async tj() {
