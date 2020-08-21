@@ -1,132 +1,124 @@
 <template>
-
-    <div class="drag">
-        <div class="drag_box" style="z-index: 3" v-drag>啊啊啊</div>
-
-        <div class="drbg_box" style="z-index: 4" v-drag>呃呃呃</div>
-    </div>
+<div class="drag">
+    <div class="one" id="one" ref="one" :style="one" style="z-index: 3" v-drag="(that)">我</div>
+    <div class="two" id="two" ref="two" :style="two" style="z-index: 4" v-drag="(that)">是</div>
+    <div class="three" id="three" ref="three" :style="three" style="z-index: 5" v-drag="(that)">猪</div>
 
 
+    <img src="../assets/images/1.jpg" height="150" width="150"/>
+    <img src="../assets/images/2.jpg" height="150" width="150"/>
+    <img src="../assets/images/3.jpg" height="150" width="150"/>
+
+    <button @click.stop="hot">获取</button>
+
+</div>
 
 </template>
 
 <script>
     export default {
-        name: "drag",
+        name: 'drag',
         data() {
             return {
-
-            };
+                one: {top: '21.7%', left: '48%'},
+                two: {top: '57.4%', left: '10%'},
+                three: {top: '40.4%', left: '20%'},
+                that: this,
+            }
         },
-        //注册局部组件指令
+        computed:{
+        },
         directives: {
-            drag(el) {
-                let drbgBox = el; //获取当前元素
-                drbgBox.ontouchstart = e => {
+            drag(el,that) {
+                let one = el; //获取当前元素
+
+                one.ontouchstart = e => {
                     //算出鼠标相对元素的位置
-                    let disX = e.touches[0].clientX - drbgBox.offsetLeft;
-                    let disY = e.touches[0].clientY- drbgBox.offsetTop;
+                    console.log(that.value.$options.data().one)
+                    let disX = e.touches[0].clientX - one.offsetLeft;
+                    let disY = e.touches[0].clientY- one.offsetTop;
                     document.ontouchmove = e => {
                         //用鼠标的位置减去鼠标相对元素的位置，得到元素的位置
                         let left = e.touches[0].clientX - disX;
                         let top = e.touches[0].clientY - disY;
                         //移动当前元素
-                        drbgBox.style.left = left + "px";
-                        drbgBox.style.top = top + "px";
+                        one.style.left = left + "px";
+                        one.style.top = top + "px";
+                        // console.log(document.getElementById('one').style.top)
+                        let oneTop=document.getElementById('one').style.top
+
+                        console.log(top)
+                        if (oneTop>300){
+                            console.log(1234)
+
+                        }
+
                     };
                     document.ontouchend = e => {
                         //鼠标弹起来的时候不再移动
-                        document.touchmove = null;
+                        document.ontouchmove = null;
                         //预防鼠标弹起来后还会循环（即预防鼠标放上去的时候还会移动）
                         document.ontouchend = null;
                     };
                 };
 
-
-                let dragBox = el; //获取当前元素
-                dragBox.ontouchstart = e => {
-                    //算出鼠标相对元素的位置
-
-                    let disX = e.touches[0].clientX- dragBox.offsetLeft;
-                    let disY = e.touches[0].clientY- dragBox.offsetTop;
-
-                    document.ontouchmove = e => {
-                        //用鼠标的位置减去鼠标相对元素的位置，得到元素的位置
-                        let left = e.touches[0].clientX - disX;
-                        let top = e.touches[0].clientY- disY;
-                        //移动当前元素
-                        dragBox.style.left = left + "px";
-                        dragBox.style.top = top + "px";
-                    };
-                    document.ontouchend = e => {
-                        //鼠标弹起来的时候不再移动
-                        document.touchmove = null;
-                        //预防鼠标弹起来后还会循环（即预防鼠标放上去的时候还会移动）
-                        document.ontouchend = null;
-                    };
-                };
             },
 
-            // drbg(el) {
-            //     let drbgBox = el; //获取当前元素
-            //     drbgBox.onmousedown = e => {
-            //         //算出鼠标相对元素的位置
-            //         let disX = e.clientX - drbgBox.offsetLeft;
-            //         let disY = e.clientY - drbgBox.offsetTop;
-            //         document.onmousemove = e => {
-            //             //用鼠标的位置减去鼠标相对元素的位置，得到元素的位置
-            //             let left = e.clientX - disX;
-            //             let top = e.clientY - disY;
-            //             //移动当前元素
-            //             drbgBox.style.left = left + "px";
-            //             drbgBox.style.top = top + "px";
-            //         };
-            //         document.onmouseup = e => {
-            //             //鼠标弹起来的时候不再移动
-            //             document.onmousemove = null;
-            //             //预防鼠标弹起来后还会循环（即预防鼠标放上去的时候还会移动）
-            //             document.onmouseup = null;
-            //         };
-            //     };
-            // },
+        },
+        methods:{
+            hot(){
+                console.log(this.$refs.one.style.left)
+            }
         }
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
     .drag {
-        width: 100%;
-        height: 100vh;
+        width: 80%;
+        height: 80%;
         background-color:#aaaaaa;
+        text-align: center;
+
+        img{
+           margin: 20px;
+           width: 20%;
+            height: auto;
+        }
     }
-    .drag_box {
-        width: 150px;
-        height: 90px;
+    .one {
+        width: 80px;
+        height: 80px;
         border: 1px solid #666;
         background-color: #ccc;
-        /* 使用定位，脱离文档流 */
         position: absolute;
-        top: 100px;
-        left: 100px;
-        /* 鼠标移入变成拖拽手势 */
-        cursor: move;
+        /*top: 220px;*/
+        /*left: 70px;*/
+
 
     }
-    .drbg {
-        width: 100%;
-        height: 500px;
-        background-color: #fff;
-    }
-    .drbg_box {
-        width: 150px;
-        height: 90px;
+    .two {
+        width: 120px;
+        height: 60px;
         border: 1px solid #d25317;
         background-color: rosybrown;
-        /* 使用定位，脱离文档流 */
         position: absolute;
-        top: 150px;
-        left: 150px;
-        /* 鼠标移入变成拖拽手势 */
-        cursor: move;
+        /*top: 290px;*/
+        /*left: 0px;*/
+
     }
+
+    .three{
+        width: 80px;
+        height: 80px;
+        border: 1px solid #d25317;
+        background-color: greenyellow;
+        position: absolute;
+        /*top: 300px;*/
+        /*left: 120px;*/
+        border-radius:80px
+
+    }
+
+
 </style>
