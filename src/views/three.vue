@@ -59,7 +59,7 @@
     const Swiper = require('../assets/js/swiper.min')
     import test from "./test";
     import html2canvas from 'html2canvas'
-
+    import EXIF from 'exif-js';
     export default {
         name: "three",
         data() {
