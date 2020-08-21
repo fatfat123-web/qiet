@@ -46,7 +46,7 @@
                         one.style.top = top + "px";
                         // console.log(document.getElementById('one').style.top)
                         let oneTop=document.getElementById('one').style.top
-
+                        console.log(that.value.$refs.one.style.left)
                         console.log(top)
                         if (oneTop>300){
                             console.log(1234)
